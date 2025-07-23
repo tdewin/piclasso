@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:ns1="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:ns2="http://www.inkscape.org/namespaces/inkscape"><g data-template-id="vault" id="vault" data-viewBox="0 0 100 100" transform="translate(0 0)"><rect width="100" height="100" rx="16.5" ry="13.8" fill="#00d15f" />
+ <path d="m28 28c-1.04 1.04-0.92 2.82 0.262 4.01l12.9 12.9a10.2 10.2 0 0 0 0 10.2l-12.9 12.9c-1.18 1.18-1.3 2.97-0.262 4.01 1.04 1.04 2.82 0.92 4.01-0.262l12.9-12.9a10.2 10.2 0 0 0 10.2 0l12.9 12.9c1.18 1.18 2.97 1.3 4.01 0.262 1.04-1.04 0.92-2.82-0.262-4.01l-12.9-12.9a10.2 10.2 0 0 0 0-10.2l12.9-12.9c1.18-1.18 1.3-2.97 0.262-4.01-1.04-1.04-2.82-0.92-4.01 0.262l-12.9 12.9a10.2 10.2 0 0 0-10.2 0l-12.9-12.9c-1.18-1.18-2.97-1.3-4.01-0.262z" fill="#fff" />
+</g><g data-template-id="vm-with-a-snapshot" id="vm-with-a-snapshot" data-viewBox="0 0 100 100" transform="translate(110.0 0)"><rect width="100" height="100" rx="16.5" ry="13.8" fill="#505861" />
+ <text transform="translate(-84.3 7.14)" fill="#505861" font-family="'ES Build'" font-size="48px" letter-spacing="-.01px" stroke="#ffffff" stroke-width="2.2" text-align="center" word-spacing="-.01px" style="line-height:1;shape-inside:url(#rect15);text-decoration-color:#000000;white-space:pre" xml:space="preserve"><tspan x="100.0177" y="60.0409"><tspan fill="#ffffff" font-family="Arial" font-weight="bold" stroke="none">VM</tspan></tspan></text>
+ <path d="m66 7.33h19.5v19.5z" fill="#fff" stroke-width="2.2" />
+</g><g data-template-id="blank" id="blank" data-viewBox="0 0 100 100" transform="translate(220.0 0)"><ns1:namedview id="namedview1" pagecolor="#ffffff" bordercolor="#000000" borderopacity="0.25" ns2:showpageshadow="2" ns2:pageopacity="0.0" ns2:pagecheckerboard="0" ns2:deskcolor="#d1d1d1" ns2:document-units="px" ns2:zoom="2.45564" ns2:cx="29.320259" ns2:cy="24.637162" ns2:window-width="1440" ns2:window-height="810" ns2:window-x="529" ns2:window-y="151" ns2:window-maximized="0" ns2:current-layer="svg1" />
+  <rect style="fill:#00d15f;stroke:none;stroke-width:1.904;stroke-opacity:0.39185" id="rect1" width="100" height="100" x="0" y="0" rx="16.467564" ry="13.839856" />
+</g><g data-template-id="vm" id="vm" data-viewBox="0 0 100 100" transform="translate(330.0 0)"><rect width="100" height="100" rx="16.5" ry="13.8" fill="#505861" />
+ <text transform="translate(-84.3 7.14)" fill="#505861" font-family="'ES Build'" font-size="48px" letter-spacing="-.01px" stroke="#ffffff" stroke-width="2.2" text-align="center" word-spacing="-.01px" style="line-height:1;shape-inside:url(#rect15);text-decoration-color:#000000;white-space:pre" xml:space="preserve"><tspan x="100.0177" y="60.0409"><tspan fill="#ffffff" font-family="Arial" font-weight="bold" stroke="none">VM</tspan></tspan></text>
+</g><g data-template-id="repo" id="repo" data-viewBox="0 0 100 100" transform="translate(440.0 0)"><rect width="100" height="100" rx="16.5" ry="13.8" fill="#00d15f" />
+ <g transform="translate(-3.55 -19.8)" fill="#00d15f" stroke="#fff" stroke-width="2.2">
+  <rect x="15.9" y="40.7" width="23.6" height="58.2" rx="7.53" ry="10.3" />
+  <rect x="46.6" y="76.5" width="10.2" height="22.4" rx="7.53" ry="3.02" />
+  <rect x="63.8" y="76.5" width="10.2" height="22.4" rx="7.53" ry="3.02" />
+  <rect x="81" y="76.5" width="10.2" height="22.4" rx="7.53" ry="3.02" />
+ </g>
+</g><g data-template-id="proxy" id="proxy" data-viewBox="0 0 100 100" transform="translate(550.0 0)"><rect width="100" height="100" rx="16.5" ry="13.8" fill="#00d15f" />
+ <g transform="rotate(180 67.9 43.5)">
+  <path d="m57.4 44 25.5-25.5" fill="#00d15f" stop-color="#000000" />
+  <path d="m81.9 17.6-25.5 25.5 1.9 1.91 25.5-25.5z" fill="#fff" stop-color="#000000" />
+  <path d="m71.9 16.7a1.35 1.35 0 0 0-1.35 1.35 1.35 1.35 0 0 0 1.35 1.35h10.1v10.1a1.35 1.35 0 0 0 1.35 1.35 1.35 1.35 0 0 0 1.35-1.35v-12.8z" fill="#fff" stop-color="#000000" stroke-linecap="round" />
+ </g>
+ <g transform="translate(-30.6 14.3)">
+  <path d="m57.4 44 25.5-25.5" fill="#00d15f" stop-color="#000000" />
+  <path d="m81.9 17.6-25.5 25.5 1.9 1.91 25.5-25.5z" fill="#fff" stop-color="#000000" />
+  <path d="m71.9 16.7a1.35 1.35 0 0 0-1.35 1.35 1.35 1.35 0 0 0 1.35 1.35h10.1v10.1a1.35 1.35 0 0 0 1.35 1.35 1.35 1.35 0 0 0 1.35-1.35v-12.8z" fill="#fff" stop-color="#000000" stroke-linecap="round" />
+ </g>
+</g><g data-template-id="vbr" id="vbr" data-viewBox="0 0 100 100" transform="translate(660.0 0)"><rect width="100" height="100" rx="16.5" ry="13.8" fill="#00d15f" />
+ <rect x="52" y="54.4" width="33.9" height="32" rx="7.53" ry="10.3" fill="#00d15f" stroke="#fff" stroke-width="2.2" />
+ <rect x="14.1" y="13.6" width="33.9" height="32" rx="7.53" ry="10.3" fill="#00d15f" stroke="#fff" stroke-width="2.2" />
+ <g transform="translate(-1.64 -1.18)">
+  <path d="m57.4 44 25.5-25.5" fill="#00d15f" stop-color="#000000" />
+  <path d="m81.9 17.6-25.5 25.5 1.9 1.91 25.5-25.5z" fill="#fff" stop-color="#000000" />
+  <path d="m71.9 16.7a1.35 1.35 0 0 0-1.35 1.35 1.35 1.35 0 0 0 1.35 1.35h10.1v10.1a1.35 1.35 0 0 0 1.35 1.35 1.35 1.35 0 0 0 1.35-1.35v-12.8z" fill="#fff" stop-color="#000000" stroke-linecap="round" />
+ </g>
+ <g transform="translate(-39.5 39.5)">
+  <path d="m57.4 44 25.5-25.5" fill="#00d15f" stop-color="#000000" />
+  <path d="m81.9 17.6-25.5 25.5 1.9 1.91 25.5-25.5z" fill="#fff" stop-color="#000000" />
+  <path d="m71.9 16.7a1.35 1.35 0 0 0-1.35 1.35 1.35 1.35 0 0 0 1.35 1.35h10.1v10.1a1.35 1.35 0 0 0 1.35 1.35 1.35 1.35 0 0 0 1.35-1.35v-12.8z" fill="#fff" stop-color="#000000" stroke-linecap="round" />
+ </g>
+</g></svg>
