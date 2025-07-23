@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <title>Pikchr Live</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    svg  {
+       color: red;
+    }
+
+  </style>
+  <script src="pikchr.js"></script>
+  <script>
+    //copy paste from https://github.com/felixr/pikchr-wasm/blob/main/example.html
+    window.uid = 0
+
+    function insertrepl(repl) {
+      let objid = prompt("Object ID",`${repl.substr(0,2).toUpperCase()}${window.uid++}`)
+
+
+      const textarea = document.getElementById("input");
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const before = textarea.value.substring(0, start);
+      const after = textarea.value.substring(end);
+
+      const text = `\n${objid.padEnd(5," ")}: rpl "${repl}"\n`
+      textarea.value = before.trimEnd() + text + after.trimEnd()+`\n       blbl(${objid},$grey,"${repl}")`;
+      textarea.selectionStart = textarea.selectionEnd = start + text.length;
+      textarea.focus();
+
+
+      update()
+    }
+
+    function update() {
+      const inpEl = document.getElementById("input");
+      const titleEl = document.getElementById("title");
+      let title = titleEl.value
+
+      const source = `
+$viridis = 0x00d15f
+$lime = 0x9cffa3
+$mint = 0x32f26f
+$pine = 0x007f49
+$darkmineral = 0x505861
+$frenchgrey = 0xADACAF
+$fog = 0xf0f0f0
+$sol = 0xffd839
+$suma = 0xfe8a25
+$casia = 0x8e71f4
+$electricazure = 0x3700ff
+$sky = 0x57e0ff
+$ignis = 0xed2b3d
+
+$green = $viridis
+$grey = $darkmineral
+$purple = $casia
+
+color = $grey
+
+//https://github.com/drhsqlite/pikchr/blob/2c46091ee5548d4fa3fedaea2fc8c0a05c5a89eb/pikchr.y#L975
+thickness = 0.015*2
+
+charwid = 0.07
+charht = 0.12
+linerad = 0.1
+arrowht = 0.1
+arrowwid = 0.12
+
+$remove = 0xee00a0
+
+fontscale = 1.7
+
+//below icon label
+define blbl {
+  text with .n at $1.s $3 color $2
+}
+//above icon label
+define albl {
+  text with .s at $1.n $3 color $2
+}
+
+define conn {
+  line from $1 to previous dot.n color $grey chop
+}
+
+define netdot {
+  dot at $1 vertex of NET color $grey rad 0.05
+  conn($2)
+}
+
+
+boxwid = 1
+boxht = 1
+
+$offset = boxht/1.5
+$o = boxht/8
+$oh = $o/2
+$o2 = $o*2
+$o3 = $o*3
+$o4 = $o*4
+$o5 = $o*5
+$o6 = $o*6
+//end veeam preamble
+
+DIAGRAM:[
+`+inpEl.value+`
+]
+
+T: box with .c at DIAGRAM.n+(0,boxht/2) color $grey "${title}" big big big big bold fit invis
+$mg = 0.3
+$minleft = max(T.w.x-DIAGRAM.nw.x,0)+$mg
+$minright = max(DIAGRAM.ne.x-T.e.x,0)+$mg
+
+DIABOX:line from T.w left $minleft\
+ then down until even with DIAGRAM.sw -(0,$mg)\
+ then right until even with T.e\
+ then right $minright\
+ then up until even with T.e\
+ then left until even with T.e\
+ then to T.e rad 0.2 color $frenchgrey thickness 200% 
+`;
+      const svgClass = "pikchr";
+      const pnWidthPtr = pikchr._malloc(4);
+      const pnHeightPtr = pikchr._malloc(4);
+
+
+      const svg = pikchr.ccall(
+        "pikchr",
+        "string",
+        ["string", "string", "number", "number", "number"],
+        [source, svgClass, 0, pnWidthPtr, pnHeightPtr],
+      );
+
+      // Retrieve values from C
+      const pnWidth = pikchr.getValue(pnWidthPtr, "i32");
+      const pnHeight = pikchr.getValue(pnHeightPtr, "i32");
+
+      const div = document.getElementById("output");
+      div.innerHTML = svg;
+
+      pikchr._free(pnWidthPtr);
+      pikchr._free(pnHeightPtr);
+      pikchr._free(svg);
+
+      
+
+      svgelements = div.getElementsByTagName("svg")
+
+      if (svgelements.length == 0 )
+      {
+        idiv = div.getElementsByTagName("div")
+        if (idiv.length > 0) {
+            idiv[0].style = "background-color:#ff7f7f;"
+        } 
+      }
+      else {
+        svgelement = svgelements[0]
+        svgdef = document.createElementNS("http://www.w3.org/2000/svg","defs")
+        svgstyle = document.createElementNS("http://www.w3.org/2000/svg","style")
+        svgstyle.innerHTML = `
+svg { font-family: "ES Build Full Bauhaus", "Arial"}
+    `
+        svgdef.append(svgstyle)
+        svgelement.append(svgdef)
+
+        let tt=null
+        candidates = svgelement.getElementsByTagName("g")
+        
+        const parser = new DOMParser();
+        templateroot = parser.parseFromString(document.getElementById("templates").value,"text/xml");
+
+        catalog = {}
+        const loaded = document.getElementById("loaded")
+        for(let i=0; i < templateroot.documentElement.children.length;i++) {
+            let c = templateroot.documentElement.children[i]
+
+            if (c.hasAttribute("data-template-id") && c.hasAttribute("data-viewBox")) {
+                let templateid = c.getAttribute("data-template-id").toLowerCase().replaceAll(" ","-")
+                let vbox = c.getAttribute("data-viewBox")
+                let vboxsplit = vbox.split(" ")
+                let maxdim = 20/Math.max(vboxsplit[2],vboxsplit[3])
+
+
+                catalog[templateid] = {"inner":c.innerHTML,
+                  "viewBox": vboxsplit,
+                  "easyclick": `<a style="margin-left:2px;" href="#" onclick="insertrepl('${templateid}')"><svg viewBox="${vbox}" width="${vboxsplit[2]*maxdim}" height="${vboxsplit[3]*maxdim}">${c.innerHTML}</svg></a>`
+                }
+                
+            }
+        }
+        const newloadedhtml = Object.keys(catalog).sort().map(key => catalog[key]["easyclick"]); 
+        loaded.innerHTML = newloadedhtml.join("\n")
+        
+        //console.log(catalog)
+        
+
+        blankpre = `<path d="m74.1 0h-68.2c-3.24 0-5.88 2.65-5.88 5.88v88.2c0 3.24 2.65 5.88 5.88 5.88h88.2c3.24 0 5.88-2.65 5.88-5.88v-68.2c0-1.56-0.618-3.06-1.74-4.15l-20-20c-1.12-1.12-2.59-1.74-4.15-1.74z" fill="#00d15f"/>
+ <text x="50" y="62" fill="#ffffff" font-family="'ES Build Full Bauhaus'" font-size="18px" stroke-width="2.94" text-align="center" text-anchor="middle" style="line-height:0.9;text-decoration-color:#000000" xml:space="preserve">`
+        blankpost = `</text>`
+        for(let i=0;i <candidates.length;i++) {
+            let g = candidates[i];
+            if (g.attributes["data-orig"] && g.attributes["data-orig-first"] && g.attributes["data-orig"].value == 'rpl') {
+                let n = g.attributes["data-orig-first"].value
+                let fht = g.attributes["data-future-height"].value
+                let fwid = g.attributes["data-future-width"].value
+
+                let template = templateroot.getElementById(n)
+                if (n in catalog) {
+                    let item = catalog[n]
+                    let vb = item["viewBox"]
+
+                    let scalewid = fwid/(vb[2]-vb[0])
+                    let scaleht = fht/(vb[3]-vb[1])
+
+                    while(g.firstChild) { g.removeChild(g.firstChild) }
+                    g.innerHTML = item["inner"]
+                    let transform = g.attributes["transform"]
+
+                    transform.value = `${transform.value} scale(${scalewid} ${scaleht})`
+                 } else {
+                    let scalewid = fwid/100
+                    let scaleht = fht/100
+                    let transform = g.attributes["transform"]
+                    while(g.firstChild) { g.removeChild(g.firstChild) }
+                    g.innerHTML = blankpre+n+blankpost
+                    transform.value = `${transform.value} scale(${scalewid} ${scaleht})`
+                }
+                //
+            }
+        }
+
+
+        div.style = `width: ${pnWidth}px; height: ${pnHeight}px`;
+
+
+
+        const serializer = new XMLSerializer();
+        const svgString = serializer.serializeToString(svgelement);
+
+        // Encode to Base64
+        //console.log(svgString)
+        const base64 = btoa(unescape(encodeURIComponent(svgString)));
+        const dataUrl = "data:image/svg+xml;base64," + base64;
+
+        const img = document.getElementsByTagName("img")[0]
+        img.src=dataUrl
+
+
+        //https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/decode
+        img.decode().then(() => {
+            canvas = document.getElementsByTagName("canvas")[0]
+            canvas.width = pnWidth;
+            canvas.height = pnHeight;
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0, pnWidth, pnHeight);
+
+            const linkpng = document.getElementById("downloadPngBtn")
+            linkpng.href = canvas.toDataURL('image/png');;
+            linkpng.download = `diagram.png`;
+        })
+        .catch((encodingError) => {
+                console.log(encodingError)
+        });
+
+
+        //not perfect, if there is " rpl " it will match as well but okay
+        const rerpl = /([\s:])rpl /g
+        const linksrc = document.getElementById("downloadSrcBtn")
+        const base64src = btoa(unescape(encodeURIComponent(source.replaceAll(rerpl,"$1box "))));
+        linksrc.href = "data:text/plain;base64," + base64src;
+        linksrc.download = `diagram.pikchr`;
+
+        const permalinksrc = document.getElementById("downloadPermaBtn")
+        const base64perma = btoa(unescape(encodeURIComponent(inpEl.value)));
+        const base64title = btoa(unescape(encodeURIComponent(title)));
+        permalinksrc.href = `${window.location.pathname}?title=${base64title}&input=${base64perma}`;
+        
+
+
+
+        const link = document.getElementById("downloadBtn")
+        link.href = dataUrl;
+        link.download = `diagram.svg`;
+        
+      }
+
+    }
+    PikchrModule().then((m) => {
+        pikchr = m;
+        
+        
+        document.getElementById("templates").value = `<svg></svg>`
+
+
+
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+          const file = event.target.files[0];
+          
+          if (!file) return;
+
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            const content = e.target.result;
+            document.getElementById('templates').value = content;
+            update()
+          };
+          reader.readAsText(file);
+        });
+
+
+
+        const inpEl = document.getElementById("input");
+        inpEl.style = "background-color:#efefef;"
+        
+        const s = window.location.search.replace(/^[?]/g,'').split('&').map((e)=>{ return e.split(/([a-z]+)=(.*)/)})
+        if (s.length >0) {
+            s.forEach((ln)=> {
+                if (ln.length > 3) {
+                    let b = atob(ln[2])
+                    let i = ln[1]
+                    console.log(i,b)
+                    
+                    if (i == "title" || i == "input") {
+                        document.getElementById(i).value = b
+                    } 
+                }
+            })
+        }
+
+        update();
+
+        
+
+        inpEl.addEventListener("keyup",(ev)=>update())
+        //document.getElementById("refresh").addEventListener("click",(ev)=>update())
+
+        const titleEl = document.getElementById("title");
+        titleEl.addEventListener("keyup",(ev)=>update())
+        
+    })
+  </script>
+</head>
+<body>
+    <div style="display: none;">
+        <img width="50" height="50" id="img"></img>
+        <canvas id="canvas"></canvas>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+          <div class="col">
+            <h1>Classful Pikchr</h1>
+            Patched version of <a href="https://pikchr.org/home/pikchrshow">pikchr.org</a>. Adds another class next to the standard box, diamond, circle, etc. called "rpl". Rpl or replace is meant to be replace by a postscript. You can download <a href="./merge.py">merge.py</a> to merge multiple svg files in a single "bundle" that can be used to replace "rpl"'s. It will filter out defs so it does not play nice with css classes and gradients for example.
+          </div>
+        </div>
+        <div class="row">
+
+            <div class="col">
+                <input class="form-control" type="file" id="fileInput" />
+                <input class="form-control" value="Veeam Diagram" id="title"/>
+                <div id="loaded"></div>
+            </div>
+            <div  class="col">
+                <!--<a id="refresh" class="btn btn-success btn" >Refresh</a>-->
+                
+                <a id="downloadPermaBtn" class="btn btn-success btn">Permalink</a>
+                <a id="downloadSrcBtn" class="btn btn-success btn">Download Pikchr</a>
+                <a id="downloadBtn" class="btn btn-success btn">Download SVG</a>
+                <a id="downloadPngBtn" class="btn btn-success btn">Download PNG</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <textarea class="form-control font-monospace" rows="20" style="display:none" id="input">VB1  : rpl "vbr"
+down
+move
+VM3  : rpl "vm-with-a-snapshot"
+right
+move 1.2
+PR0  : rpl "proxy"
+right
+move 1.2
+RE1  : rpl "repo"
+move 1.2
+VA2  : rpl "vault"
+
+       arrow from VM3 to PR0 chop "Backup" above
+       arrow from PR0 to RE1 chop "Backup" above
+       arrow from RE1 to VA2 chop "Copy" above
+
+       blbl(VM3,$grey,"vm-with-a-snapshot")
+       blbl(VB1,$grey,"Backup & Replication")
+       blbl(PR0,$grey,"Proxy")
+       blbl(RE1,$grey,"Repo")
+       blbl(VA2,$grey,"Vault")</textarea>
+                <textarea class="form-control" style="display: none;" rows="20" id="templates">
+                </textarea>
+            </div>
+            
+            <div id="output" class="col">
+            </div>
+        </div>
+  </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</body>
+</html>
