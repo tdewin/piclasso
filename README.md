@@ -1,6 +1,8 @@
 # Piclasso
 Pikchr with classes, live on https://tdewin.github.io/piclasso/
 
+![](./piclasso.png)
+
 ## Know issues
 To convert back to native pikchr, piclasso does replace " rpl " with " box ". The regex might replace inline text as a consequence.
 
