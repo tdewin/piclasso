@@ -13,9 +13,7 @@
       color: #1a1a1a;
       background-color: #fdfdfd;
     }
-    svg  {
-       color: red;
-    }
+
 
   </style>
   <script src="pikchr.js"></script>
@@ -205,8 +203,8 @@ svg { font-family: "ES Build Full Bauhaus", "Arial"}
         //console.log(catalog)
         
 
-        blankpre = `<path d="m74.1 0h-68.2c-3.24 0-5.88 2.65-5.88 5.88v88.2c0 3.24 2.65 5.88 5.88 5.88h88.2c3.24 0 5.88-2.65 5.88-5.88v-68.2c0-1.56-0.618-3.06-1.74-4.15l-20-20c-1.12-1.12-2.59-1.74-4.15-1.74z" fill="#00d15f"/>
- <text x="50" y="62" fill="#ffffff" font-family="'ES Build Full Bauhaus'" font-size="18px" stroke-width="2.94" text-align="center" text-anchor="middle" style="line-height:0.9;text-decoration-color:#000000" xml:space="preserve">`
+        blankpre = `<rect fill="#00d15f" width="100" height="100" rx="15" ry="15" id="rect1" x="0" y="0" />`
+        blankpretext = `<text x="50" y="60" fill="#fff" font-family="'ES Build Full Bauhaus'" font-size="18px" stroke-width="0" text-align="center" text-anchor="middle"  style="line-height:0.9;text-decoration-color:#000000" xml:space="preserve">`
         blankpost = `</text>`
         for(let i=0;i <candidates.length;i++) {
             let g = candidates[i];
@@ -233,7 +231,21 @@ svg { font-family: "ES Build Full Bauhaus", "Arial"}
                     let scaleht = fht/100
                     let transform = g.attributes["transform"]
                     while(g.firstChild) { g.removeChild(g.firstChild) }
-                    g.innerHTML = blankpre+n+blankpost
+
+                    
+                    ratio = fht / fwid
+                    scalex = 1
+                    scaley = 1
+                    fontreset = 0
+
+                    if (ratio > 1) {
+                      scaley = 1/ratio
+                    } else {
+                      scalex = ratio
+                      fontreset = ((50/ratio)-50)
+                    }
+
+                    g.innerHTML = blankpre+`<g transform="scale(${scalex} ${scaley}) translate(${fontreset} 0)">`+blankpretext+n+blankpost+`</g>`
                     transform.value = `${transform.value} scale(${scalewid} ${scaleht})`
                 }
                 //
@@ -302,6 +314,18 @@ svg { font-family: "ES Build Full Bauhaus", "Arial"}
         
         
         document.getElementById("templates").value = `<svg></svg>`
+        fetch("./pubicons-bundle.svg").then(response => {
+              if (!response.ok) {
+                console.log('Network response was not ok');
+              }
+              return response.text();
+            })
+            .then(svgContent => {
+              document.getElementById('templates').value = svgContent;
+            })
+            .catch(error => {
+              console.log('Error fetching SVG:', error);
+            });
 
 
 
@@ -366,6 +390,7 @@ svg { font-family: "ES Build Full Bauhaus", "Arial"}
             Rpl or replace is meant to be replace by a postscript. 
             You can download <a href="./merge.py">merge.py</a> to merge multiple svg files in a single "bundle" that can be used to replace "rpl"'s. 
             It will filter out defs so it does not play nice with css classes and gradients for example. There is a <a href="./pubicons-bundle.svg" download="pubicons-bundle.svg">pubicons-bundle.svg</a> example you can load to stylize the default diagram.
+            Source code available a <a href="https://github.com/tdewin/piclasso">Piclasso Github</a>
           </div>
         </div>
         <div class="row">
@@ -399,15 +424,22 @@ RE1  : rpl "repo"
 move 1.2
 VA2  : rpl "vault"
 
+HY0  : rpl "hypervisor" with .ne at VM3.se-(0,$o4) wid 3 ht 1.75
+THY0 : text "vSphere" big big big  with .c at HY0.c+(0,$o3) color white
+VM1  : rpl "vm" with .sw at HY0.nw+(0,$o4)
+
+
+
        arrow from VM3 to PR0 chop "Backup" above
        arrow from PR0 to RE1 chop "Backup" above
        arrow from RE1 to VA2 chop "Copy" above
 
-       blbl(VM3,$grey,"vm-with-a-snapshot")
+       blbl(VM3,$grey,"VM to Backup")
        blbl(VB1,$grey,"Backup & Replication")
        blbl(PR0,$grey,"Proxy")
        blbl(RE1,$grey,"Repo")
-       blbl(VA2,$grey,"Vault")</textarea>
+       blbl(VA2,$grey,"Vault")
+       blbl(VM1,$grey,"vm")</textarea>
                 <textarea class="form-control" style="display: none;" rows="20" id="templates">
                 </textarea>
             </div>
