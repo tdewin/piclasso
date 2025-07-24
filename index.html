@@ -17,6 +17,8 @@
 
   </style>
   <script src="pikchr.js"></script>
+  <script src="piclassrender.js"></script>
+  <script src="piclassgui.js"></script>
   <script>
     //copy paste from https://github.com/felixr/pikchr-wasm/blob/main/example.html
     window.uid = 0
@@ -47,64 +49,8 @@
       const titleEl = document.getElementById("title");
       let title = titleEl.value
 
-      const source = `
+      const source = wrapsource(inpEl.value,title)
 
-$grey = 0x506060
-$lightgrey = 0xefefef
-$purple = blueviolet
-color = $grey
-linerad = 0.1
-arrowht = 0.1
-arrowwid = 0.12
-fontscale = 1.5
-boxwid = 1
-boxht = 1
-
-$o = boxht/8
-$oh = $o/2
-$o2 = $o*2
-$o3 = $o*3
-$o4 = $o*4
-$o5 = $o*5
-$o6 = $o*6
-$o7 = $o*7
-$o8 = $o*8
-$mh = -$oh
-$m2 = -$o2
-$m3 = -$o3
-$m4 = -$o4
-$m5 = -$o5
-$m6 = -$o6
-$m7 = -$o7
-$m8 = -$o8
-$margin = $o2
-
-define title { TITLE:text "${title}" with $1 at $2}
-define titledBox {
- $minleft = max($1.w.x-$2.nw.x,0)+$margin
- $minright = max($2.ne.x-$1.e.x,0)+$margin
- line from $1.w left $minleft\
- then down until even with $2.sw -(0,$margin)\
- then right until even with $1.e\
- then right $minright\
- then up until even with $1.e\
- then left until even with $1.e\
- then to $1.e rad 0.2 color $3 thickness 200% 
-}
-
-//below icon label
-define blbl { text with .n at $1.s $3 color $2;move to $1.end}
-//above icon label
-define albl { text with .s at $1.n $3 color $2;move to $1.end}
-
-define conn { line from $1 to previous dot.n color $grey chop }
-define netdot { dot at $1 vertex of NET color $grey rad 0.05;conn($2) }
-
-
-
-`+inpEl.value+`
-
-`;
       const svgClass = "pikchr";
       const pnWidthPtr = pikchr._malloc(4);
       const pnHeightPtr = pikchr._malloc(4);
@@ -143,97 +89,23 @@ define netdot { dot at $1 vertex of NET color $grey rad 0.05;conn($2) }
         fontfamily = document.getElementById("fontfamily").value
 
         svgelement = svgelements[0]
-        svgdef = document.createElementNS("http://www.w3.org/2000/svg","defs")
-        svgstyle = document.createElementNS("http://www.w3.org/2000/svg","style")
-        svgstyle.innerHTML = `
-svg { font-family: ${fontfamily}}
-    `
-        svgdef.append(svgstyle)
-        svgelement.append(svgdef)
-
         
-        candidates = svgelement.getElementsByTagName("g")
-        
-        const parser = new DOMParser();
-        templateroot = parser.parseFromString(document.getElementById("templates").value,"text/xml");
+        catalog = catalogloader(document.getElementById("templates").value)        
+        postrender(svgelement,catalog)
+        addfont(svgelement,fontfamily)
 
-        catalog = {}
-        const loaded = document.getElementById("loaded")
-        for(let i=0; i < templateroot.documentElement.children.length;i++) {
-            let c = templateroot.documentElement.children[i]
+        const loaded = document.getElementById("loaded")        
+        const newloadedhtml = Object.keys(catalog).sort().map(key => {
+          let item = catalog[key]
+          let vboxsplit = item["viewBox"]
+          let maxdim = 20/Math.max(vboxsplit[2],vboxsplit[3])
 
-            if (c.hasAttribute("data-template-id") && c.hasAttribute("data-viewBox")) {
-                let templateid = c.getAttribute("data-template-id").toLowerCase().replaceAll(" ","-")
-                let vbox = c.getAttribute("data-viewBox")
-                let vboxsplit = vbox.split(" ")
-                let maxdim = 20/Math.max(vboxsplit[2],vboxsplit[3])
-
-
-                catalog[templateid] = {"inner":c.innerHTML,
-                  "viewBox": vboxsplit,
-                  "easyclick": `<a style="margin-left:2px;" href="#" onclick="insertrepl('${templateid}')"><svg viewBox="${vbox}" width="${vboxsplit[2]*maxdim}" height="${vboxsplit[3]*maxdim}">${c.innerHTML}</svg></a>`
-                }
-                
-            }
-        }
-        const newloadedhtml = Object.keys(catalog).sort().map(key => catalog[key]["easyclick"]); 
+          return `<a style="margin-left:2px;" href="#" onclick="insertrepl('${key}')"><svg viewBox="${item['vBstr']}" width="${vboxsplit[2]*maxdim}" height="${vboxsplit[3]*maxdim}">${item['inner']}</svg></a>`
+        }); 
         loaded.innerHTML = newloadedhtml.join("\n")
-        
-        //console.log(catalog)
-        
-
-        blankpre = `<rect fill="#506060" width="100" height="100" rx="15" ry="15" id="rect1" x="0" y="0" />`
-        blankpretext = `<text x="50" y="60" fill="#fff" font-family="${fontfamily}" font-size="18px" stroke-width="0" text-align="center" text-anchor="middle"  style="line-height:0.9;text-decoration-color:#000000" xml:space="preserve">`
-        blankpost = `</text>`
-        for(let i=0;i <candidates.length;i++) {
-            let g = candidates[i];
-            if (g.attributes["data-orig"] && g.attributes["data-orig-first"] && g.attributes["data-orig"].value == 'rpl') {
-                let n = g.attributes["data-orig-first"].value
-                let fht = g.attributes["data-future-height"].value
-                let fwid = g.attributes["data-future-width"].value
-
-                let template = templateroot.getElementById(n)
-                if (n in catalog) {
-                    let item = catalog[n]
-                    let vb = item["viewBox"]
-
-                    let scalewid = fwid/(vb[2]-vb[0])
-                    let scaleht = fht/(vb[3]-vb[1])
-
-                    while(g.firstChild) { g.removeChild(g.firstChild) }
-                    g.innerHTML = item["inner"]
-                    let transform = g.attributes["transform"]
-
-                    transform.value = `${transform.value} scale(${scalewid} ${scaleht})`
-                 } else {
-                    let scalewid = fwid/100
-                    let scaleht = fht/100
-                    let transform = g.attributes["transform"]
-                    while(g.firstChild) { g.removeChild(g.firstChild) }
-
-                    
-                    ratio = fht / fwid
-                    scalex = 1
-                    scaley = 1
-                    fontreset = 0
-
-                    if (ratio > 1) {
-                      scaley = 1/ratio
-                    } else {
-                      scalex = ratio
-                      fontreset = ((50/ratio)-50)
-                    }
-
-                    g.innerHTML = blankpre+`<g transform="scale(${scalex} ${scaley}) translate(${fontreset} 0)">`+blankpretext+n+blankpost+`</g>`
-                    transform.value = `${transform.value} scale(${scalewid} ${scaleht})`
-                }
-                //
-            }
-        }
 
 
         div.style = `width: ${pnWidth}px; height: ${pnHeight}px`;
-
 
         const filename = title.toLowerCase().replaceAll(/[^A-Za-z0-9]+/g,"-").replace(/^[-\s]+|[-\s]+$/g, '');
         const serializer = new XMLSerializer();
@@ -279,8 +151,6 @@ svg { font-family: ${fontfamily}}
         const base64font = btoa(unescape(encodeURIComponent(fontfamily)));
         permalinksrc.href = `${window.location.pathname}?t=${base64title}&f=${base64font}&i=${base64perma}`;
         
-
-
 
         const link = document.getElementById("downloadBtn")
         link.href = dataUrl;
@@ -348,7 +218,6 @@ svg { font-family: ${fontfamily}}
 
         update();
 
-        
 
         inpEl.addEventListener("keyup",(ev)=>update())
         //document.getElementById("refresh").addEventListener("click",(ev)=>update())
