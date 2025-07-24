@@ -322,6 +322,7 @@ svg { font-family: "ES Build Full Bauhaus", "Arial"}
             })
             .then(svgContent => {
               document.getElementById('templates').value = svgContent;
+              update();
             })
             .catch(error => {
               console.log('Error fetching SVG:', error);
