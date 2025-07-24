@@ -314,6 +314,19 @@ svg { font-family: "ES Build Full Bauhaus", "Arial"}
         
         
         document.getElementById("templates").value = `<svg></svg>`
+        fetch("./pubicons-bundle.svg").then(response => {
+              if (!response.ok) {
+                console.log('Network response was not ok');
+              }
+              return response.text();
+            })
+            .then(svgContent => {
+              document.getElementById('templates').value = svgContent;
+            })
+            .catch(error => {
+              console.log('Error fetching SVG:', error);
+            });
+
 
 
         document.getElementById('fileInput').addEventListener('change', function(event) {
