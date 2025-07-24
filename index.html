@@ -31,9 +31,11 @@
       const before = textarea.value.substring(0, start);
       const after = textarea.value.substring(end);
 
-      const text = `\n${objid.padEnd(5," ")}: rpl "${repl}"\n`
-      textarea.value = before.trimEnd() + text + after.trimEnd()+`\n       blbl(${objid},$grey,"${repl}")`;
-      textarea.selectionStart = textarea.selectionEnd = start + text.length;
+      const padding= `\n       `
+      const text = `\n${objid.padEnd(5," ")}: rpl "${repl}"`
+      const label = `${padding}blbl(${objid},$grey,"${repl}");${padding}move\n`
+      textarea.value = before.trimEnd() + text +label+after;
+      textarea.selectionStart = textarea.selectionEnd = start+text.length+label.length;
       textarea.focus();
 
 
@@ -46,62 +48,17 @@
       let title = titleEl.value
 
       const source = `
-$viridis = 0x00d15f
-$lime = 0x9cffa3
-$mint = 0x32f26f
-$pine = 0x007f49
-$darkmineral = 0x505861
-$frenchgrey = 0xADACAF
-$fog = 0xf0f0f0
-$sol = 0xffd839
-$suma = 0xfe8a25
-$casia = 0x8e71f4
-$electricazure = 0x3700ff
-$sky = 0x57e0ff
-$ignis = 0xed2b3d
 
-$green = $viridis
-$grey = $darkmineral
-$purple = $casia
-
+$grey = 0x506060
+$lightgrey = 0xefefef
 color = $grey
-
-//https://github.com/drhsqlite/pikchr/blob/2c46091ee5548d4fa3fedaea2fc8c0a05c5a89eb/pikchr.y#L975
-thickness = 0.015*2
-
-charwid = 0.07
-charht = 0.12
 linerad = 0.1
 arrowht = 0.1
 arrowwid = 0.12
-
-$remove = 0xee00a0
-
-fontscale = 1.7
-
-//below icon label
-define blbl {
-  text with .n at $1.s $3 color $2
-}
-//above icon label
-define albl {
-  text with .s at $1.n $3 color $2
-}
-
-define conn {
-  line from $1 to previous dot.n color $grey chop
-}
-
-define netdot {
-  dot at $1 vertex of NET color $grey rad 0.05
-  conn($2)
-}
-
-
+fontscale = 1.5
 boxwid = 1
 boxht = 1
 
-$offset = boxht/1.5
 $o = boxht/8
 $oh = $o/2
 $o2 = $o*2
@@ -109,24 +66,43 @@ $o3 = $o*3
 $o4 = $o*4
 $o5 = $o*5
 $o6 = $o*6
-//end veeam preamble
+$o7 = $o*7
+$o8 = $o*8
+$mh = -$oh
+$m2 = -$o2
+$m3 = -$o3
+$m4 = -$o4
+$m5 = -$o5
+$m6 = -$o6
+$m7 = -$o7
+$m8 = -$o8
+$margin = $o2
 
-DIAGRAM:[
-`+inpEl.value+`
-]
-
-T: box with .c at DIAGRAM.n+(0,boxht/2) color $grey "${title}" big big big big bold fit invis
-$mg = 0.3
-$minleft = max(T.w.x-DIAGRAM.nw.x,0)+$mg
-$minright = max(DIAGRAM.ne.x-T.e.x,0)+$mg
-
-DIABOX:line from T.w left $minleft\
- then down until even with DIAGRAM.sw -(0,$mg)\
- then right until even with T.e\
+define title { TITLE:text "${title}" with $1 at $2}
+define titledBox {
+ $minleft = max($1.w.x-$2.nw.x,0)+$margin
+ $minright = max($2.ne.x-$1.e.x,0)+$margin
+ line from $1.w left $minleft\
+ then down until even with $2.sw -(0,$margin)\
+ then right until even with $1.e\
  then right $minright\
- then up until even with T.e\
- then left until even with T.e\
- then to T.e rad 0.2 color $frenchgrey thickness 200% 
+ then up until even with $1.e\
+ then left until even with $1.e\
+ then to $1.e rad 0.2 color $3 thickness 200% 
+}
+
+//below icon label
+define blbl { text with .n at $1.s $3 color $2;move to $1.end}
+//above icon label
+define albl { text with .s at $1.n $3 color $2;move to $1.end}
+
+define conn { line from $1 to previous dot.n color $grey chop }
+define netdot { dot at $1 vertex of NET color $grey rad 0.05;conn($2) }
+
+
+
+`+inpEl.value+`
+
 `;
       const svgClass = "pikchr";
       const pnWidthPtr = pikchr._malloc(4);
@@ -163,16 +139,18 @@ DIABOX:line from T.w left $minleft\
         } 
       }
       else {
+        fontfamily = document.getElementById("fontfamily").value
+
         svgelement = svgelements[0]
         svgdef = document.createElementNS("http://www.w3.org/2000/svg","defs")
         svgstyle = document.createElementNS("http://www.w3.org/2000/svg","style")
         svgstyle.innerHTML = `
-svg { font-family: "ES Build Full Bauhaus", "Arial"}
+svg { font-family: ${fontfamily}}
     `
         svgdef.append(svgstyle)
         svgelement.append(svgdef)
 
-        let tt=null
+        
         candidates = svgelement.getElementsByTagName("g")
         
         const parser = new DOMParser();
@@ -203,8 +181,8 @@ svg { font-family: "ES Build Full Bauhaus", "Arial"}
         //console.log(catalog)
         
 
-        blankpre = `<rect fill="#00d15f" width="100" height="100" rx="15" ry="15" id="rect1" x="0" y="0" />`
-        blankpretext = `<text x="50" y="60" fill="#fff" font-family="'ES Build Full Bauhaus'" font-size="18px" stroke-width="0" text-align="center" text-anchor="middle"  style="line-height:0.9;text-decoration-color:#000000" xml:space="preserve">`
+        blankpre = `<rect fill="#506060" width="100" height="100" rx="15" ry="15" id="rect1" x="0" y="0" />`
+        blankpretext = `<text x="50" y="60" fill="#fff" font-family="${fontfamily}" font-size="18px" stroke-width="0" text-align="center" text-anchor="middle"  style="line-height:0.9;text-decoration-color:#000000" xml:space="preserve">`
         blankpost = `</text>`
         for(let i=0;i <candidates.length;i++) {
             let g = candidates[i];
@@ -256,7 +234,7 @@ svg { font-family: "ES Build Full Bauhaus", "Arial"}
         div.style = `width: ${pnWidth}px; height: ${pnHeight}px`;
 
 
-
+        const filename = title.toLowerCase().replaceAll(/[^A-Za-z0-9]+/g,"-").replace(/^[-\s]+|[-\s]+$/g, '');
         const serializer = new XMLSerializer();
         const svgString = serializer.serializeToString(svgelement);
 
@@ -280,7 +258,7 @@ svg { font-family: "ES Build Full Bauhaus", "Arial"}
 
             const linkpng = document.getElementById("downloadPngBtn")
             linkpng.href = canvas.toDataURL('image/png');;
-            linkpng.download = `diagram.png`;
+            linkpng.download = `${filename}.png`;
         })
         .catch((encodingError) => {
                 console.log(encodingError)
@@ -292,19 +270,20 @@ svg { font-family: "ES Build Full Bauhaus", "Arial"}
         const linksrc = document.getElementById("downloadSrcBtn")
         const base64src = btoa(unescape(encodeURIComponent(source.replaceAll(rerpl,"$1box "))));
         linksrc.href = "data:text/plain;base64," + base64src;
-        linksrc.download = `diagram.pikchr`;
+        linksrc.download = `${filename}.pikchr`;
 
         const permalinksrc = document.getElementById("downloadPermaBtn")
         const base64perma = btoa(unescape(encodeURIComponent(inpEl.value)));
         const base64title = btoa(unescape(encodeURIComponent(title)));
-        permalinksrc.href = `${window.location.pathname}?title=${base64title}&input=${base64perma}`;
+        const base64font = btoa(unescape(encodeURIComponent(fontfamily)));
+        permalinksrc.href = `${window.location.pathname}?t=${base64title}&f=${base64font}&i=${base64perma}`;
         
 
 
 
         const link = document.getElementById("downloadBtn")
         link.href = dataUrl;
-        link.download = `diagram.svg`;
+        link.download = `${filename}.svg`;
         
       }
 
@@ -355,10 +334,11 @@ svg { font-family: "ES Build Full Bauhaus", "Arial"}
                 if (ln.length > 3) {
                     let b = atob(ln[2])
                     let i = ln[1]
-                    console.log(i,b)
+                    //console.log(i,b)
                     
-                    if (i == "title" || i == "input") {
-                        document.getElementById(i).value = b
+                    map = {"t":"title","f":"fontfamily","i":"input"}
+                    if (i in map) {
+                        document.getElementById(map[i]).value = b
                     } 
                 }
             })
@@ -378,9 +358,10 @@ svg { font-family: "ES Build Full Bauhaus", "Arial"}
   </script>
 </head>
 <body>
-    <div style="display: none;">
+    <div style="display: none;" id="debugpanel">
         <img width="50" height="50" id="img"></img>
         <canvas id="canvas"></canvas>
+        
     </div>
     <div class="container-fluid">
         <div class="row">
@@ -398,21 +379,26 @@ svg { font-family: "ES Build Full Bauhaus", "Arial"}
 
             <div class="col">
                 <input class="form-control" type="file" id="fileInput" />
-                <input class="form-control" value="Veeam Diagram" id="title"/>
+                
+                <input class="form-control" value="Arial" id="fontfamily" />
                 <div id="loaded"></div>
             </div>
             <div  class="col">
                 <!--<a id="refresh" class="btn btn-success btn" >Refresh</a>-->
-                
-                <a id="downloadPermaBtn" class="btn btn-success btn">Permalink</a>
-                <a id="downloadSrcBtn" class="btn btn-success btn">Download Pikchr</a>
-                <a id="downloadBtn" class="btn btn-success btn">Download SVG</a>
-                <a id="downloadPngBtn" class="btn btn-success btn">Download PNG</a>
+                <input class="form-control" value="Piclasso Diagram" id="title"/>
+                <div class="w-100 mb-2" >
+                  <a id="downloadPermaBtn" class="btn  btn-success mt-1" style="min-width:150px">Permalink</a>
+                  <a id="downloadSrcBtn" class="btn btn-success mt-1" style="min-width:150px">Download Pikchr</a>
+                  <a id="downloadBtn" class="btn btn-success mt-1" style="min-width:150px">Download SVG</a>
+                  <a id="downloadPngBtn" class="btn btn-success mt-1"   style="min-width:150px">Download PNG</a>
+                </div>
+
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <textarea class="form-control font-monospace" rows="20" style="display:none" id="input">VB1  : rpl "vbr"
+                <textarea class="form-control font-monospace" rows="20" style="display:none" id="input">DIAGRAM:[
+VB1  : rpl "vbr"
 down
 move
 VM3  : rpl "vm-with-a-snapshot"
@@ -440,7 +426,12 @@ VM1  : rpl "vm" with .sw at HY0.nw+(0,$o4)
        blbl(PR0,$grey,"Proxy")
        blbl(RE1,$grey,"Repo")
        blbl(VA2,$grey,"Vault")
-       blbl(VM1,$grey,"vm")</textarea>
+       blbl(VM1,$grey,"vm")
+      
+]
+title(.s,DIAGRAM.n)
+titledBox(TITLE,DIAGRAM,$lightgrey)
+</textarea>
                 <textarea class="form-control" style="display: none;" rows="20" id="templates">
                 </textarea>
             </div>
