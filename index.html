@@ -336,7 +336,8 @@ svg { font-family: ${fontfamily}}
                     let i = ln[1]
                     //console.log(i,b)
                     
-                    map = {"t":"title","f":"fontfamily","i":"input"}
+                    //last two for legacy links
+                    map = {"t":"title","f":"fontfamily","i":"input","title":"title","input":"input"}
                     if (i in map) {
                         document.getElementById(map[i]).value = b
                     } 
@@ -361,7 +362,6 @@ svg { font-family: ${fontfamily}}
     <div style="display: none;" id="debugpanel">
         <img width="50" height="50" id="img"></img>
         <canvas id="canvas"></canvas>
-        
     </div>
     <div class="container-fluid">
         <div class="row">
