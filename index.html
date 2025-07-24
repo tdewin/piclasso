@@ -23,7 +23,20 @@
     //copy paste from https://github.com/felixr/pikchr-wasm/blob/main/example.html
     window.uid = 0
 
-    function insertrepl(repl) {
+
+    function filterclick() {
+      let search = document.getElementById('filter').value
+      let list = document.getElementsByClassName("easyclick")
+      for (let i=0;i < list.length;i++) {
+        let e = list[i]
+        if (e.getAttribute("data-key").match(RegExp(search))) {
+          e.style = ""
+        } else {
+          e.style = "display:none;"
+        }
+      }       
+    }
+    function insertrepl(repl,wid,ht) {
       let objid = prompt("Object ID",`${repl.substr(0,2).toUpperCase()}${window.uid++}`)
 
 
@@ -34,7 +47,16 @@
       const after = textarea.value.substring(end);
 
       const padding= `\n       `
-      const text = `\n${objid.padEnd(5," ")}: rpl "${repl}"`
+
+      let r = wid/ht
+      let add = ""
+      if (r > 1) {
+        add = ` wid ${Math.round(r*100)/100}`
+      } else if (r < 1) {
+        add = ` ht ${Math.round(ht*100/wid)/100}`
+      }
+
+      const text = `\n${objid.padEnd(5," ")}: rpl "${repl}"${add}`
       const label = `${padding}blbl(${objid},$grey,"${repl}");${padding}move\n`
       textarea.value = before.trimEnd() + text +label+after;
       textarea.selectionStart = textarea.selectionEnd = start+text.length+label.length;
@@ -55,6 +77,22 @@
       const pnWidthPtr = pikchr._malloc(4);
       const pnHeightPtr = pikchr._malloc(4);
 
+
+      //must load in any case
+      catalog = catalogloader(document.getElementById("templates").value)        
+      const loaded = document.getElementById("loaded")        
+      const newloadedhtml = Object.keys(catalog).sort().map(key => {
+        let item = catalog[key]
+        let vboxsplit = item["viewBox"]
+        let rsz = 30
+        let maxdim = rsz/Math.max(vboxsplit[2],vboxsplit[3])
+
+        return `<a style="margin-left:2px;" href="#" class="easyclick" data-key="${key}" onclick="insertrepl('${key}',${vboxsplit[2]},${vboxsplit[3]})"><svg viewBox="${item['vBstr']}" width="${vboxsplit[2]*maxdim}" height="${vboxsplit[3]*maxdim}"><title>${key}</title>${item['inner']}</svg></a>`
+      }); 
+      loaded.classList.add("d-none")
+      loaded.innerHTML = newloadedhtml.join("\n")
+      filterclick()
+      loaded.classList.remove("d-none")
 
       const svg = pikchr.ccall(
         "pikchr",
@@ -90,19 +128,10 @@
 
         svgelement = svgelements[0]
         
-        catalog = catalogloader(document.getElementById("templates").value)        
+        
+
         postrender(svgelement,catalog)
         addfont(svgelement,fontfamily)
-
-        const loaded = document.getElementById("loaded")        
-        const newloadedhtml = Object.keys(catalog).sort().map(key => {
-          let item = catalog[key]
-          let vboxsplit = item["viewBox"]
-          let maxdim = 20/Math.max(vboxsplit[2],vboxsplit[3])
-
-          return `<a style="margin-left:2px;" href="#" onclick="insertrepl('${key}')"><svg viewBox="${item['vBstr']}" width="${vboxsplit[2]*maxdim}" height="${vboxsplit[3]*maxdim}">${item['inner']}</svg></a>`
-        }); 
-        loaded.innerHTML = newloadedhtml.join("\n")
 
 
         div.style = `width: ${pnWidth}px; height: ${pnHeight}px`;
@@ -251,6 +280,7 @@
                 <input class="form-control" type="file" id="fileInput" />
                 
                 <input class="form-control" value="Arial" id="fontfamily" />
+                <input class="form-control" placeholder="filter" value="" onkeyup="filterclick()" id="filter" />
                 <div id="loaded"></div>
             </div>
             <div  class="col">

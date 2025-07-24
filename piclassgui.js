@@ -1,8 +1,11 @@
 function wrapsource(source,title) {
     const wrappedsource = `//piclass preamble, non default pikchr definitions
-$grey = 0x506060
-$lightgrey = 0xefefef
-$purple = blueviolet
+//based on veeam coloring scheme https://www.veeam.com/company/brand-resource-center.html
+$grey = 0x505861
+$lightgrey = 0xf0f0f0
+$purple = 0x8e71f4
+$green = 0x00d15f
+
 color = $grey
 linerad = 0.1
 arrowht = 0.1

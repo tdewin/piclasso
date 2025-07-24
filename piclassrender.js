@@ -1,7 +1,7 @@
 function postrender(svgelement,catalog) {
     candidates = svgelement.getElementsByTagName("g")
 
-    blankpre = `<rect fill="#506060" width="100" height="100" rx="15" ry="15" id="rect1" x="0" y="0" />`
+    blankpre = `<rect fill="#505861" width="100" height="100" rx="15" ry="15" id="rect1" x="0" y="0" />`
     blankpretext = `<text x="50" y="60" fill="#fff" font-family="${fontfamily}" font-size="18px" stroke-width="0" text-align="center" text-anchor="middle"  style="line-height:0.9;text-decoration-color:#000000" xml:space="preserve">`
     blankpost = `</text>`
 
