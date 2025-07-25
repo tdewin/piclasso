@@ -69,6 +69,10 @@ PDAM  : rpl "data-mover"
 PRO  : rpl "proxy" with .n at PDAM.s+(0,$m4)
        move
 
+HOTADD: rpl "vm" at PROXY.se+($m6,0)
+       
+
+
 //datastore
 DA  : rpl "datastore" with .c at DS.n+($o5,0);up
        move boxht/2
@@ -76,10 +80,25 @@ HY  : rpl "hypervisor" wid 1.22 with .s at previous.n
       box "ESX" color white fill $green thickness 0 with .c at HY.c+(0,0.02) ht 0.2 //overwrite the hypervisor label
        move boxht/2
 
-
-
 VMW  : rpl "vmware-vsphere" with .s at HY.n+(0,$o5)
        blbl(VMW,$grey,"vCenter");
+
+
+BACKUPVM: rpl "vm-windows"  with .se at HY.nw
+line from HY.nw+($o2,$m2) then to BACKUPVM.e+($m2,$o) then to BACKUPVM.w+($o2,$m2) close fill lightgrey behind BACKUPVM color lightgrey
+
+
+VMDK : rpl "hdd" with .sw at DS.w+($mg,$mmg)
+       blbl(VMDK,$grey,"VMDK");
+move;
+SNAPDISK: rpl "hdd" with .se at DS.e+($mmg,$mmg)
+       blbl(SNAPDISK,$grey,"SNAPSHOT");
+       move
+
+DELSNAP: rpl "unavailable" with .c at SNAPDISK.sw+($o2,$o2)
+
+
+
 
 
 //connections
