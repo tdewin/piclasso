@@ -1,0 +1,131 @@
+fontscale=1.6
+
+//FRAMEWORK
+$mgmtwid = 10
+$radbig = 0.1
+$radbig4= 4*$radbig
+$thickbig = 0.03
+$hbig = 4.5
+$hhalf = 3
+$mg = 0.2
+$mmg = -$mg
+
+MGMT: box ht $hbig wid $mgmtwid rad  $radbig thickness $thickbig
+box "Management Server" big bold fit thickness 0 fill white with .c at previous.n 
+
+$halfbox = MGMT.wid/2-2*$radbig
+REPO: box ht $hhalf wid $halfbox  rad $radbig thickness $thickbig with .nw at MGMT.sw-(0,$radbig4)
+PROXY: box ht $hhalf wid $halfbox rad $radbig thickness $thickbig with .ne at MGMT.se-(0,$radbig4)
+DS: box ht $hhalf wid $halfbox rad $radbig thickness $thickbig with .nw at MGMT.se+($radbig4,-$radbig4)
+
+box "Repository Server" bold big fit thickness 0 fill white with .c at REPO.s
+box "Proxy Server" bold big  fit thickness 0 fill white with .c at PROXY.s
+box "Datastore" bold big  fit thickness 0 fill white with .w at DS.nw+($o2,$o)
+//ENDFRAMEWORK
+
+//MGMT
+
+EM  : rpl "vbem-veeam-backup-enterprise-manager" with .nw at MGMT.nw+($mg,$mmg)
+      blbl(EM,$grey,"Enterprise" "Manager");
+
+CO  : rpl "self-service-portal" with .ne at MGMT.ne+($mmg,$mmg)
+      blbl(CO,$grey,"Console");
+
+VB  : rpl "vbr-veeam-backup-replication" with .n at 0.5 between EM.s and CO.s
+      blbl(VB,$grey,"Backup & Replication");
+
+JOBMAN  : rpl "service" with .n at VB.s+(0,$m2)
+       blbl(JOBMAN,$grey,"Job Manager");
+
+IV  : rpl "service" with .c at (VB.c.x+CO.c.x)/2,VB.c.y
+      blbl(IV,$grey,"Inventory","Service");
+
+
+
+//REPO
+right
+INS  : rpl "service" with .nw at REPO.nw+($mg,$mmg)
+       blbl(INS,$grey,"Installer" "Service");
+       move $o
+TRA  : rpl "service"
+       blbl(TRA,$grey,"Transport" "Service");
+       move $o
+DAM  : rpl "data-mover"
+       blbl(DAM,$grey,"Data Mover");
+       move $o
+BAC  : rpl "backup-repository" with .n at INS.s+(0,$m4)
+       move
+
+//proxy
+PINS  : rpl "service"  with .nw at PROXY.nw+($mg,$mmg)
+       blbl(PINS,$grey,"Installer" "Service");
+       move $o
+PTRA  : rpl "service"
+       blbl(PTRA,$grey,"Transport" "Service");
+       move $o
+PDAM  : rpl "data-mover"
+       blbl(PDAM,$grey,"Data Mover");
+       move $o
+PRO  : rpl "proxy" with .n at PDAM.s+(0,$m4)
+       move
+
+//datastore
+DA  : rpl "datastore" with .c at DS.n+($o5,0);up
+       move boxht/2
+HY  : rpl "hypervisor" wid 1.22 with .s at previous.n
+      box "ESX" color white fill $green thickness 0 with .c at HY.c+(0,0.02) ht 0.2 //overwrite the hypervisor label
+       move boxht/2
+
+
+
+VMW  : rpl "vmware-vsphere" with .s at HY.n+(0,$o5)
+       blbl(VMW,$grey,"vCenter");
+
+
+//connections
+//mgmt
+arrow from EM.e right until even with VB.n-($o,0) then to VB.n-($o,0) color $purple
+text "TCP 443" with .sw at 1st vertex of previous arrow
+
+arrow from CO.w right until even with VB.n+($o,0) then to VB.n+($o,0) color $purple
+text "TCP 443" with .se at 1st vertex of previous arrow
+
+arrow from JOBMAN.sw+(0,$o7) left $o6 then up until even with VB.w+(0,$o2) then to VB.w+(0,$o2) color $purple
+text "TCP 9392" with .e at 0.5 between 2th vertex of previous arrow and 3th vertex of previous arrow
+
+arrow from IV.e right until even with DS.w then up until even with VMW.w then to VMW.w color $purple
+text "TCP 443" with .sw at 3rd vertex of previous arrow
+
+
+//repo
+arrow from JOBMAN.sw+(0,$o5) then left until even with INS.n then to INS.n color $purple
+text "TCP 6160" with .nw at 2nd vertex of previous
+JOBMAN_TRA:arrow from JOBMAN.sw+(0,$o4) then left until even with TRA.n then to TRA.n color $purple
+text "TCP 6162" with .nw at 2nd vertex of previous 
+JOBMAN_DAM:arrow from JOBMAN.sw+(0,$o3) then left until even with DAM.n then to DAM.n color $purple
+text "TCP 2500-3300" with .nw at 2nd vertex of previous 
+
+arrow from BAC to PRO color $purple chop 
+BACPRO:text with .s at 0.3 between BAC and PRO "TCP 2500-3300"
+
+//proxy
+arrow from JOBMAN.se+(0,$o3) then left until even with PINS.n then to PINS.n color $purple
+text "TCP 6160" with .nw at 2nd vertex of previous
+arrow from JOBMAN.se+(0,$o4) then left until even with PTRA.n then to PTRA.n color $purple
+text "TCP 6162" with .nw at 2nd vertex of previous 
+arrow from JOBMAN.se+(0,$o5) then left until even with PDAM.n then to PDAM.n color $purple
+text "TCP 2500-3300" with .nw at 2nd vertex of previous 
+
+//vcenter
+arrow from HY to DA chop
+
+//steps
+right;circle fill orange color white "1" with .nw at JOBMAN.sw+(0,$m3);
+circle fill orange color white "2" with .ne at JOBMAN.se+(0,$m3);
+circle fill orange color white "3" with .ne at VB.w+(0,0);
+
+circle fill orange color white "4" with .e at 0.3 between 2nd vertex of JOBMAN_TRA and 3rd vertex of JOBMAN_TRA +($m2,0)
+
+circle fill orange color white "5" with .e at 0.4 between 2nd vertex of JOBMAN_DAM and 3rd vertex of JOBMAN_DAM +($m2,0)
+
+circle fill orange color white "6" with .ne at BACPRO.sw
