@@ -141,13 +141,13 @@ text "TCP 2500-3300" with .nw at 2nd vertex of previous
 arrow from HY to DA chop 
 
 //steps
-right;circle fill orange color white "1" with .nw at JOBMAN.sw+(0,$m3);
-circle fill orange color white "2" with .ne at JOBMAN.se+(0,$m3);
-circle fill orange color white "3" with .ne at VB.w+(0,0);
+right;circle fill orange color white "1" big big big bold with .nw at JOBMAN.sw+(0,$m3);
+circle fill orange color white "2" big big big bold with .ne at JOBMAN.se+(0,$m3);
+circle fill orange color white "3" big big big bold with .ne at VB.w+(0,0);
 
-circle fill orange color white "4" with .e at 0.3 between 2nd vertex of JOBMAN_TRA and 3rd vertex of JOBMAN_TRA +($m2,0)
+circle fill orange color white "4" big big big bold with .e at 0.3 between 2nd vertex of JOBMAN_TRA and 3rd vertex of JOBMAN_TRA +($m2,0)
 
-circle fill orange color white "5" with .e at 0.4 between 2nd vertex of JOBMAN_DAM and 3rd vertex of JOBMAN_DAM +($m2,0)
+circle fill orange color white "5" big big big bold with .e at 0.4 between 2nd vertex of JOBMAN_DAM and 3rd vertex of JOBMAN_DAM +($m2,0)
 
-circle fill orange color white "6" with .ne at BACPRO.sw
-circle fill orange color white "7" with .s at VB_IV.n+(0,$o)
+circle fill orange color white "6" big big big bold with .ne at BACPRO.sw
+circle fill orange color white "7" big big big bold with .s at VB_IV.n+(0,$o)
