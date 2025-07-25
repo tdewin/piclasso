@@ -1,4 +1,4 @@
-fontscale=1.6
+fontscale=1.8
 
 //FRAMEWORK
 $mgmtwid = 10
@@ -112,7 +112,9 @@ text "TCP 443" with .se at 1st vertex of previous arrow
 arrow from JOBMAN.sw+(0,$o7) left $o6 then up until even with VB.w+(0,$o2) then to VB.w+(0,$o2) color $purple
 text "TCP 9392" with .e at 0.5 between 2th vertex of previous arrow and 3th vertex of previous arrow
 
-arrow from IV.e right until even with DS.w then up until even with VMW.w then to VMW.w color $purple
+VB_IV:arrow from VB to IV chop color $purple
+
+arrow from IV.e right until even with DS.w then up until even with VMW.nw+(0,$m2) then to VMW.nw+(0,$m2) color $purple
 text "TCP 443" with .sw at 3rd vertex of previous arrow
 
 
@@ -136,7 +138,7 @@ arrow from JOBMAN.se+(0,$o5) then left until even with PDAM.n then to PDAM.n col
 text "TCP 2500-3300" with .nw at 2nd vertex of previous 
 
 //vcenter
-arrow from HY to DA chop
+arrow from HY to DA chop 
 
 //steps
 right;circle fill orange color white "1" with .nw at JOBMAN.sw+(0,$m3);
@@ -148,3 +150,4 @@ circle fill orange color white "4" with .e at 0.3 between 2nd vertex of JOBMAN_T
 circle fill orange color white "5" with .e at 0.4 between 2nd vertex of JOBMAN_DAM and 3rd vertex of JOBMAN_DAM +($m2,0)
 
 circle fill orange color white "6" with .ne at BACPRO.sw
+circle fill orange color white "7" with .s at VB_IV.n+(0,$o)
