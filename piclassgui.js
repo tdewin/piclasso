@@ -23,6 +23,7 @@ $o5 = $o*5
 $o6 = $o*6
 $o7 = $o*7
 $o8 = $o*8
+$m = -$o
 $mh = -$oh
 $m2 = -$o2
 $m3 = -$o3
@@ -45,6 +46,14 @@ define titledBox {
  then left until even with $1.e\
  then to $1.e rad 0.2 color $3 thickness 200% 
 }
+
+$bouncedbox_c = 0.23;define bouncedBox {
+ REF: dot color green rad $bouncedbox_c at $1.nw invis
+ //move  a bit away so that when closing, rad will work and we will not get a hard straight |_ corner
+ move to REF+($bouncedbox_c,0) 
+ L:line right $1.wid-$bouncedbox_c-$bouncedbox_c then to REF+($1.wid,-$bouncedbox_c) then down $1.ht-$bouncedbox_c then left $1.wid then up until even with REF close rad $bouncedbox_c/5 thickness $bouncedbox_c/5 
+ move to previous.end
+ }
 
 //below icon label
 define blbl { text with .n at $1.s $3 color $2;move to $1.end}

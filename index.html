@@ -37,7 +37,7 @@
       }       
     }
     function insertrepl(repl,wid,ht) {
-      let objid = prompt("Object ID",`${repl.substr(0,2).toUpperCase()}${window.uid++}`)
+      let objid = prompt("Object ID",`${repl.substr(0,2).toUpperCase()}${window.uid++}`).toUpperCase()
 
 
       const textarea = document.getElementById("input");
