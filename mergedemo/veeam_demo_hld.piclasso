@@ -1,0 +1,106 @@
+$hboxwid = boxwid/2
+$locationwidth = (3+1)*boxwid
+$locationheight = (5+1)*boxwid
+$locationcolor = $lightgrey
+
+LOC1: box wid $locationwidth ht $locationheight color $locationcolor rad 0.3
+move $hboxwid;
+LOC2: box wid $locationwidth ht $locationheight color $locationcolor rad 0.3
+move $hboxwid;
+LOC3: box wid $locationwidth ht $locationheight color $locationcolor rad 0.3
+
+box "Amsterdam" fit with .c at LOC1.n invis;
+box "Brussels" fit with .c at LOC2.n invis;
+box "Paris" fit with .c at LOC3.n invis;
+
+//LOC1
+down;move to LOC1.nw+($hboxwid,0);
+
+LOC1_VMWINDOWS: rpl "vm-windows"
+       blbl(LOC1_VMWINDOWS,$grey,"Window" "100TB");
+       move
+
+LOC1_VMLINUX: rpl "vm-linux"
+       blbl(LOC1_VMLINUX,$grey,"Linux" "100TB");
+       move
+
+move 1
+LOC1_RMAN: rpl "veeam-plug-in-for-oracle-rman"
+       blbl(LOC1_RMAN,$grey,"RMAN");
+       move
+
+
+move to LOC1.ne+(-$hboxwid,0);
+LOC1_HARDREPO: rpl "linux-repository"
+       blbl(LOC1_HARDREPO,$grey,"HR" "1000TB");
+       move
+
+LOC1_HARDREPO_PLUGIN: rpl "linux-repository" at (LOC1_HARDREPO.c.x,LOC1_RMAN.c.y)
+       blbl(LOC1_HARDREPO_PLUGIN,$grey,"HR" "1000TB");
+       move
+
+ARR_LOC1_VMWINDOWS_LOC1_HARDREPO: arrow -> from LOC1_VMWINDOWS to LOC1_HARDREPO chop "" above
+ARR_LOC1_VMLINUX_LOC1_HARDREPO: arrow -> from LOC1_VMLINUX right until even with LOC1.c then up until even with LOC1_HARDREPO then to LOC1_HARDREPO chop "" above
+ARR_LOC1_RMAN_LOC1_HARDREPO_PLUGIN: arrow -> from LOC1_RMAN to LOC1_HARDREPO_PLUGIN chop "" above
+       
+//LOC2
+down;move to LOC2.nw+($hboxwid,0);
+
+LOC2_VMWINDOWS: rpl "vm-windows"
+       blbl(LOC2_VMWINDOWS,$grey,"Window" "100TB");
+       move
+
+LOC2_VMLINUX: rpl "vm-linux"
+       blbl(LOC2_VMLINUX,$grey,"Linux" "100TB");
+       move
+
+move 1
+LOC2_RMAN: rpl "veeam-plug-in-for-oracle-rman"
+       blbl(LOC2_RMAN,$grey,"RMAN");
+       move
+
+
+move to LOC2.ne+(-$hboxwid,0);
+LOC2_HARDREPO: rpl "linux-repository"
+       blbl(LOC2_HARDREPO,$grey,"HR" "1000TB");
+       move
+
+LOC2_HARDREPO_PLUGIN: rpl "linux-repository" at (LOC2_HARDREPO.c.x,LOC2_RMAN.c.y)
+       blbl(LOC2_HARDREPO_PLUGIN,$grey,"HR" "1000TB");
+       move
+
+ARR_LOC2_VMWINDOWS_LOC2_HARDREPO: arrow -> from LOC2_VMWINDOWS to LOC2_HARDREPO chop "" above
+ARR_LOC2_VMLINUX_LOC2_HARDREPO: arrow -> from LOC2_VMLINUX right until even with LOC2.c then up until even with LOC2_HARDREPO then to LOC2_HARDREPO chop "" above
+ARR_LOC2_RMAN_LOC2_HARDREPO_PLUGIN: arrow -> from LOC2_RMAN to LOC2_HARDREPO_PLUGIN chop "" above
+
+//LOC3
+down;move to LOC3.nw+($hboxwid,0);
+
+LOC3_VMWINDOWS: rpl "vm-windows"
+       blbl(LOC3_VMWINDOWS,$grey,"Window" "100TB");
+       move
+
+LOC3_VMLINUX: rpl "vm-linux"
+       blbl(LOC3_VMLINUX,$grey,"Linux" "100TB");
+       move
+
+move 1
+LOC3_RMAN: rpl "veeam-plug-in-for-oracle-rman"
+       blbl(LOC3_RMAN,$grey,"RMAN");
+       move
+
+
+move to LOC3.ne+(-$hboxwid,0);
+LOC3_HARDREPO: rpl "linux-repository"
+       blbl(LOC3_HARDREPO,$grey,"HR" "1000TB");
+       move
+
+LOC3_HARDREPO_PLUGIN: rpl "linux-repository" at (LOC3_HARDREPO.c.x,LOC3_RMAN.c.y)
+       blbl(LOC3_HARDREPO_PLUGIN,$grey,"HR" "1000TB");
+       move
+
+ARR_LOC3_VMWINDOWS_LOC3_HARDREPO: arrow -> from LOC3_VMWINDOWS to LOC3_HARDREPO chop "" above
+ARR_LOC3_VMLINUX_LOC3_HARDREPO: arrow -> from LOC3_VMLINUX right until even with LOC3.c then up until even with LOC3_HARDREPO then to LOC3_HARDREPO chop "" above
+ARR_LOC3_RMAN_LOC3_HARDREPO_PLUGIN: arrow -> from LOC3_RMAN to LOC3_HARDREPO_PLUGIN chop "" above
+       
+
