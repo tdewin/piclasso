@@ -252,12 +252,11 @@
         
         
         templatetext = localStorage.getItem("lastcatalog")
-        if (!templatetext) {
+        if (templatetext) {
+          document.getElementById("templates").value = templatetext
+        } else {
           templatetext = `<svg></svg>`
-        }
-        document.getElementById("templates").value = templatetext
-
-        fetch("./pubicons-bundle.svg").then(response => {
+          fetch("./pubicons-bundle.svg").then(response => {
               if (!response.ok) {
                 console.log('Network response was not ok');
               }
@@ -268,8 +267,13 @@
               update();
             })
             .catch(error => {
+              document.getElementById("templates").value = templatetext
               console.log('Error fetching SVG:', error);
             });
+        }
+        
+
+        
 
 
 
