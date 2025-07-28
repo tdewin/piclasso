@@ -292,13 +292,9 @@
         const inpEl = document.getElementById("input");
         inpEl.style = "background-color:#efefef;"
         
-        const lasttext = localStorage.getItem("lastinput");
-        if (lasttext) {
-          if(confirm("Do you want to restore last session?")) {
-            inpEl.value = lasttext
-          }
-        }
+        
         const s = window.location.search.replace(/^[?]/g,'').split('&').map((e)=>{ return e.split(/([a-z]+)=(.*)/)})
+        let gotinputviasearch = false
         if (s.length >0) {
             s.forEach((ln)=> {
                 if (ln.length > 3) {
@@ -310,9 +306,20 @@
                     map = {"t":"title","f":"fontfamily","i":"input","title":"title","input":"input"}
                     if (i in map) {
                         document.getElementById(map[i]).value = b
+
+                        if (map[i] == "input") {
+                          gotinputviasearch = true
+                        }
                     } 
                 }
             })
+        }
+
+        const lasttext = localStorage.getItem("lastinput");
+        if (!gotinputviasearch && lasttext) {
+          if(confirm("Do you want to restore last session?")) {
+            inpEl.value = lasttext
+          }
         }
 
         update();
