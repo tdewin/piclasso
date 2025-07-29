@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
 import argparse
 import base64
+from urllib.parse import urlparse, parse_qs
+import gzip
+import io
 import json
 import math
 
 import platform
 import subprocess
+import sys
 
 def open_url(url):
     if platform.system() == "Darwin":  # Darwin is the system name for macOS
@@ -17,6 +21,8 @@ def open_url(url):
 
 
 def calculateres(resources,wlid,wlres,wllabel,wlarrow,names={"pname":"proxy","pnameid":"PROXY"}):
+  #when you copy from link the resources are not calculated
+  if resources is not None:
     repoid =  ""
     proxyid = ""
     resi = 0
@@ -31,7 +37,6 @@ def calculateres(resources,wlid,wlres,wllabel,wlarrow,names={"pname":"proxy","pn
             resnameid = names["pnameid"]
             isproxy = True
         
-
         
 
         resid='{}_{}{}'.format(wlid,resnameid,resi)
@@ -69,14 +74,37 @@ def calculateres(resources,wlid,wlres,wllabel,wlarrow,names={"pname":"proxy","pn
 def main():
     parser = argparse.ArgumentParser(description="Read location names from a JSON file.")
     parser.add_argument("filepath", help="Path to the JSON file containing location data")
+    parser.add_argument("--aslink", action="store_true", help="Reads from a link that contains ?=scn. Notice that these links lack the resource calculations")
     parser.add_argument("--link", action="store_true", help="Enable link mode (optional flag)")
     parser.add_argument("--open", action="store_true", help="Open the url (for now mac only)")
     args = parser.parse_args()
 
     try:
-        
-        with open(args.filepath, 'r') as file:
-            data = json.load(file)
+            data = {}
+            inputdata = ""
+            
+
+            if args.filepath == '-':
+                inputdata = sys.stdin.read()
+            else:
+                with open(args.filepath, 'r') as f:
+                    inputdata = f.read()
+
+            if  args.aslink:
+                parsed = urlparse(inputdata)
+                query = parsed.query
+                # Extract the value of the 'scn' parameter
+                scn_value = parse_qs(query).get('scn', [None])[0]
+                encoded = scn_value.replace('-', '+').replace('_', '/')
+                padding = len(encoded) % 4
+                if padding:
+                    encoded += '=' * (4 - padding)
+
+                compressed = base64.b64decode(encoded)
+                with gzip.GzipFile(fileobj=io.BytesIO(compressed)) as f:
+                    inputdata = f.read().decode('utf-8')
+
+            data = json.loads(inputdata)
 
             basetxt = []
             preamble = []
