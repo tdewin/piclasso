@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="100" height="100" version="1.1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
  <rect width="100" height="100" rx="16.5" ry="13.8" fill="#505861"/>
- <text transform="translate(-84.3 7.14)" fill="#505861" font-family="'ES Build'" font-size="48px" letter-spacing="-.01px" stroke="#ffffff" stroke-width="2.2" text-align="center" word-spacing="-.01px" style="line-height:1;shape-inside:url(#rect15);text-decoration-color:#000000;white-space:pre" xml:space="preserve"><tspan x="100.0177" y="60.0409"><tspan fill="#ffffff" font-family="Arial" font-weight="bold" stroke="none">VM</tspan></tspan></text>
- <path d="m66 7.33h19.5v19.5z" fill="#fff" stroke-width="2.2"/>
+ <path d="m35.3 61.5-8.19-22.9h5.02l5.8 17 5.61-17h4.91l-8.2 22.9zm15.4 0v-22.9h6.92l4.16 15.6 4.11-15.6h6.94v22.9h-4.3v-18l-4.55 18h-4.45l-4.53-18v18z" fill="#fff" stroke-width="2.2" style="white-space:pre" aria-label="VM"/>
+ <path d="m72 11.3 19.9 20.3v-22.9h-22.9z" fill="#fff"/>
 </svg>
