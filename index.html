@@ -14,6 +14,15 @@
       background-color: #fdfdfd;
     }
 
+    #closex {
+      background-color: red;
+      color: white;
+      font-size: 1;
+      text-decoration: none;
+      text-align: center;
+      display: inline-block;
+      width: 20px;
+    }
 
   </style>
   <script src="pikchr.js"></script>
@@ -351,9 +360,10 @@
         <canvas id="canvas"></canvas>
     </div>
     <div class="container-fluid">
-        <div class="row">
+        <div class="row" id="divheader">
           <div class="col">
-            <h1>Piclasso</h1>
+            
+            <h1 style="display: inline-block;">Piclasso</h1> <a href="#" class="position-absolute top-0 end-0" onclick="document.getElementById('divheader').classList.add('d-none')" id="closex">X</a><br>
             Patched version of <a href="https://pikchr.org/home/pikchrshow">pikchr.org</a>. 
             Adds another class next to the standard box, diamond, circle, etc. called "rpl".
             Rpl or replace is meant to be replace by a postscript. 
