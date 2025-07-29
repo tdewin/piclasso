@@ -1,4 +1,4 @@
-function postrender(svgelement,catalog) {
+function postrender(svgelement,catalog,fontfamily) {
     candidates = svgelement.getElementsByTagName("g")
 
     blankpre = `<rect fill="#505861" width="100" height="100" rx="15" ry="15" id="rect1" x="0" y="0" />`
