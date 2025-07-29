@@ -19,12 +19,18 @@ def calculateres(resources,wlid,wlres,wllabel,wlarrow,names={"pname":"proxy","pn
             resnameid = names["pnameid"]
             isproxy = True
         
+
+        
+
         resid='{}_{}{}'.format(wlid,resnameid,resi)
     
         diskoutput = ""
+        
         for d in res.get("Disks"):
-            if d.get("Purpose") == 3:
+            if d.get("Purpose") in [3,4]:
                 diskoutput = d.get("CapacityString")
+                if d.get("Type") == 2:
+                    resname = "object-storage"
         mover = "boxwid*{}".format(multi)
         
         wlres.append('{}: rpl "{}" with .w at {}.e+({},0)\n     move'.format(resid,resname,wlid,mover))
