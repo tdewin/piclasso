@@ -4,6 +4,18 @@ import base64
 import json
 import math
 
+import platform
+import subprocess
+
+def open_url(url):
+    if platform.system() == "Darwin":  # Darwin is the system name for macOS
+        subprocess.run(["open", url])
+    else:
+        print(url)
+
+
+
+
 def calculateres(resources,wlid,wlres,wllabel,wlarrow,names={"pname":"proxy","pnameid":"PROXY"}):
     repoid =  ""
     proxyid = ""
@@ -58,6 +70,7 @@ def main():
     parser = argparse.ArgumentParser(description="Read location names from a JSON file.")
     parser.add_argument("filepath", help="Path to the JSON file containing location data")
     parser.add_argument("--link", action="store_true", help="Enable link mode (optional flag)")
+    parser.add_argument("--open", action="store_true", help="Open the url (for now mac only)")
     args = parser.parse_args()
 
     try:
@@ -149,10 +162,15 @@ def main():
             preamble.append("".join(['$rows=',str(maxload),'\n$locationheight = ($rows*1.5+0.5)*boxht']))
             preamble += basetxt
             if args.link:
-                print("https://tdewin.github.io/piclasso/?f={}&t={}&i={}".format(
+                url = "https://tdewin.github.io/piclasso/?f={}&t={}&i={}".format(
                     base64.b64encode("'ES Build Full Bauhaus', 'Arial'".encode('utf-8')).decode('utf-8'),
                     base64.b64encode(title.encode('utf-8')).decode('utf-8'),
-                    base64.b64encode("\n".join(preamble).encode('utf-8')).decode('utf-8')))
+                    base64.b64encode("\n".join(preamble).encode('utf-8')).decode('utf-8'))
+                if args.open:
+                    open_url(url)
+                else:
+                    print(url)
+                
             else:
                 print("\n".join(basetxt))
     except FileNotFoundError:
