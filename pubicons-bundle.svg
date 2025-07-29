@@ -1,20 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:ns1="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:ns2="http://www.inkscape.org/namespaces/inkscape"><g data-template-id="vault" id="vault" data-viewBox="0 0 100 100" transform="translate(0 0)"><rect width="100" height="100" rx="16.5" ry="13.8" fill="#00d15f" />
+<svg xmlns="http://www.w3.org/2000/svg"><g data-template-id="rect" id="rect.svg" data-viewBox="0 0 100 100" transform="translate(0 0)"><rect width="100" height="100" rx="16.5" ry="13.8" fill="#00d15f" />
+ <text transform="translate(39.4 61.5)" fill="#00d15f" font-family="'ES Build'" font-size="32px" letter-spacing="-.01px" stroke="#ffffff" stroke-width="2.2" text-align="center" word-spacing="-.01px" style="line-height:1;shape-inside:url(#rect15);text-decoration-color:#000000;white-space:pre" xml:space="preserve"><tspan x="0" y="0"><tspan fill="#ffffff" font-family="Arial" font-weight="bold" stroke="none">V</tspan></tspan></text>
+</g><g data-template-id="veeam-agent" id="veeam-agent.svg" data-viewBox="0 0 100 100" transform="translate(110.0 0)"><rect width="100" height="100" rx="16.5" ry="13.8" fill="#00d15f" />
+ <path d="m27.9 58.1h-5.03l-2-5.2h-9.16l-1.89 5.2h-4.91l8.92-22.9h4.89zm-8.52-9.06-3.16-8.5-3.09 8.5zm10.5 10.2 5.02 0.609q0.125 0.875 0.578 1.2 0.625 0.469 1.97 0.469 1.72 0 2.58-0.516 0.578-0.344 0.875-1.11 0.203-0.547 0.203-2.02v-2.42q-1.97 2.69-4.97 2.69-3.34 0-5.3-2.83-1.53-2.23-1.53-5.56 0-4.17 2-6.38 2.02-2.2 5-2.2 3.08 0 5.08 2.7v-2.33h4.11v14.9q0 2.94-0.484 4.39t-1.36 2.28-2.34 1.3q-1.45 0.469-3.69 0.469-4.22 0-5.98-1.45-1.77-1.44-1.77-3.66 0-0.219 0.0156-0.531zm3.92-9.73q0 2.64 1.02 3.88 1.03 1.22 2.53 1.22 1.61 0 2.72-1.25 1.11-1.27 1.11-3.73 0-2.58-1.06-3.83t-2.69-1.25q-1.58 0-2.61 1.23-1.02 1.22-1.02 3.73zm25.6 3.36 4.38 0.734q-0.844 2.41-2.67 3.67-1.81 1.25-4.55 1.25-4.33 0-6.41-2.83-1.64-2.27-1.64-5.72 0-4.12 2.16-6.45 2.16-2.34 5.45-2.34 3.7 0 5.84 2.45 2.14 2.44 2.05 7.48h-11q0.0469 1.95 1.06 3.05 1.02 1.08 2.53 1.08 1.03 0 1.73-0.562t1.06-1.81zm0.25-4.44q-0.0469-1.91-0.984-2.89-0.938-1-2.28-1-1.44 0-2.38 1.05t-0.922 2.84zm23 9.72h-4.39v-8.47q0-2.69-0.281-3.47-0.281-0.797-0.922-1.23-0.625-0.438-1.52-0.438-1.14 0-2.05 0.625t-1.25 1.66q-0.328 1.03-0.328 3.81v7.52h-4.39v-16.6h4.08v2.44q2.17-2.81 5.47-2.81 1.45 0 2.66 0.531 1.2 0.516 1.81 1.33 0.625 0.812 0.859 1.84 0.25 1.03 0.25 2.95zm12.1-16.6v3.5h-3v6.69q0 2.03 0.0781 2.38 0.0938 0.328 0.391 0.547 0.312 0.219 0.75 0.219 0.609 0 1.77-0.422l0.375 3.41q-1.53 0.656-3.47 0.656-1.19 0-2.14-0.391-0.953-0.406-1.41-1.03-0.438-0.641-0.609-1.72-0.141-0.766-0.141-3.09v-7.23h-2.02v-3.5h2.02v-3.3l4.41-2.56v5.86z" fill="#fff" stroke-width="2.2" style="white-space:pre" aria-label="Agent" />
+</g><g data-template-id="vault" id="vault.svg" data-viewBox="0 0 100 100" transform="translate(220.0 0)"><rect width="100" height="100" rx="16.5" ry="13.8" fill="#00d15f" />
  <path d="m28 28c-1.04 1.04-0.92 2.82 0.262 4.01l12.9 12.9a10.2 10.2 0 0 0 0 10.2l-12.9 12.9c-1.18 1.18-1.3 2.97-0.262 4.01 1.04 1.04 2.82 0.92 4.01-0.262l12.9-12.9a10.2 10.2 0 0 0 10.2 0l12.9 12.9c1.18 1.18 2.97 1.3 4.01 0.262 1.04-1.04 0.92-2.82-0.262-4.01l-12.9-12.9a10.2 10.2 0 0 0 0-10.2l12.9-12.9c1.18-1.18 1.3-2.97 0.262-4.01-1.04-1.04-2.82-0.92-4.01 0.262l-12.9 12.9a10.2 10.2 0 0 0-10.2 0l-12.9-12.9c-1.18-1.18-2.97-1.3-4.01-0.262z" fill="#fff" />
-</g><g data-template-id="vm-with-a-snapshot" id="vm-with-a-snapshot" data-viewBox="0 0 100 100" transform="translate(110.0 0)"><rect width="100" height="100" rx="16.5" ry="13.8" fill="#505861" />
- <text transform="translate(-84.3 7.14)" fill="#505861" font-family="'ES Build'" font-size="48px" letter-spacing="-.01px" stroke="#ffffff" stroke-width="2.2" text-align="center" word-spacing="-.01px" style="line-height:1;shape-inside:url(#rect15);text-decoration-color:#000000;white-space:pre" xml:space="preserve"><tspan x="100.0177" y="60.0409"><tspan fill="#ffffff" font-family="Arial" font-weight="bold" stroke="none">VM</tspan></tspan></text>
- <path d="m66 7.33h19.5v19.5z" fill="#fff" stroke-width="2.2" />
-</g><g data-template-id="blank" id="blank" data-viewBox="0 0 100 100" transform="translate(220.0 0)"><ns1:namedview id="namedview1" pagecolor="#ffffff" bordercolor="#000000" borderopacity="0.25" ns2:showpageshadow="2" ns2:pageopacity="0.0" ns2:pagecheckerboard="0" ns2:deskcolor="#d1d1d1" ns2:document-units="px" ns2:zoom="2.45564" ns2:cx="29.320259" ns2:cy="24.637162" ns2:window-width="1440" ns2:window-height="810" ns2:window-x="529" ns2:window-y="151" ns2:window-maximized="0" ns2:current-layer="svg1" />
-  <rect style="fill:#00d15f;stroke:none;stroke-width:1.904;stroke-opacity:0.39185" id="rect1" width="100" height="100" x="0" y="0" rx="16.467564" ry="13.839856" />
-</g><g data-template-id="vm" id="vm" data-viewBox="0 0 100 100" transform="translate(330.0 0)"><rect width="100" height="100" rx="16.5" ry="13.8" fill="#505861" />
- <text transform="translate(-84.3 7.14)" fill="#505861" font-family="'ES Build'" font-size="48px" letter-spacing="-.01px" stroke="#ffffff" stroke-width="2.2" text-align="center" word-spacing="-.01px" style="line-height:1;shape-inside:url(#rect15);text-decoration-color:#000000;white-space:pre" xml:space="preserve"><tspan x="100.0177" y="60.0409"><tspan fill="#ffffff" font-family="Arial" font-weight="bold" stroke="none">VM</tspan></tspan></text>
-</g><g data-template-id="repo" id="repo" data-viewBox="0 0 100 100" transform="translate(440.0 0)"><rect width="100" height="100" rx="16.5" ry="13.8" fill="#00d15f" />
+</g><g data-template-id="vm-with-a-snapshot" id="vm-with-a-snapshot.svg" data-viewBox="0 0 100 100" transform="translate(330.0 0)"><rect width="100" height="100" rx="16.5" ry="13.8" fill="#505861" />
+ <path d="m35.3 61.5-8.19-22.9h5.02l5.8 17 5.61-17h4.91l-8.2 22.9zm15.4 0v-22.9h6.92l4.16 15.6 4.11-15.6h6.94v22.9h-4.3v-18l-4.55 18h-4.45l-4.53-18v18z" fill="#fff" stroke-width="2.2" style="white-space:pre" aria-label="VM" />
+ <path d="m72 11.3 19.9 20.3v-22.9h-22.9z" fill="#fff" />
+</g><g data-template-id="backup-repository" id="backup-repository.svg" data-viewBox="0 0 100 100" transform="translate(440.0 0)"><rect width="100" height="100" rx="16.5" ry="13.8" fill="#00d15f" />
  <g transform="translate(-3.55 -19.8)" fill="#00d15f" stroke="#fff" stroke-width="2.2">
   <rect x="15.9" y="40.7" width="23.6" height="58.2" rx="7.53" ry="10.3" />
   <rect x="46.6" y="76.5" width="10.2" height="22.4" rx="7.53" ry="3.02" />
   <rect x="63.8" y="76.5" width="10.2" height="22.4" rx="7.53" ry="3.02" />
   <rect x="81" y="76.5" width="10.2" height="22.4" rx="7.53" ry="3.02" />
  </g>
-</g><g data-template-id="proxy" id="proxy" data-viewBox="0 0 100 100" transform="translate(550.0 0)"><rect width="100" height="100" rx="16.5" ry="13.8" fill="#00d15f" />
+</g><g data-template-id="vm" id="vm.svg" data-viewBox="0 0 100 100" transform="translate(550.0 0)"><rect width="100" height="100" rx="16.5" ry="13.8" fill="#505861" />
+ <path d="m35.3 61.5-8.19-22.9h5.02l5.8 17 5.61-17h4.91l-8.2 22.9zm15.4 0v-22.9h6.92l4.16 15.6 4.11-15.6h6.94v22.9h-4.3v-18l-4.55 18h-4.45l-4.53-18v18z" fill="#fff" stroke-width="2.2" style="white-space:pre" aria-label="VM" />
+</g><g data-template-id="data-mover" id="data-mover.svg" data-viewBox="0 0 100 100" transform="translate(660.0 0)"><rect x="15.9" y="15.9" width="68.1" height="68.1" rx="34.1" ry="34.1" fill="#00d15f" stroke-width=".681" />
  <g transform="rotate(180 67.9 43.5)">
   <path d="m57.4 44 25.5-25.5" fill="#00d15f" stop-color="#000000" />
   <path d="m81.9 17.6-25.5 25.5 1.9 1.91 25.5-25.5z" fill="#fff" stop-color="#000000" />
@@ -25,7 +27,25 @@
   <path d="m81.9 17.6-25.5 25.5 1.9 1.91 25.5-25.5z" fill="#fff" stop-color="#000000" />
   <path d="m71.9 16.7a1.35 1.35 0 0 0-1.35 1.35 1.35 1.35 0 0 0 1.35 1.35h10.1v10.1a1.35 1.35 0 0 0 1.35 1.35 1.35 1.35 0 0 0 1.35-1.35v-12.8z" fill="#fff" stop-color="#000000" stroke-linecap="round" />
  </g>
-</g><g data-template-id="vbr" id="vbr" data-viewBox="0 0 100 100" transform="translate(660.0 0)"><rect width="100" height="100" rx="16.5" ry="13.8" fill="#00d15f" />
+</g><g data-template-id="repo" id="repo.svg" data-viewBox="0 0 100 100" transform="translate(770.0 0)"><rect width="100" height="100" rx="16.5" ry="13.8" fill="#00d15f" />
+ <g transform="translate(-3.55 -19.8)" fill="#00d15f" stroke="#fff" stroke-width="2.2">
+  <rect x="15.9" y="40.7" width="23.6" height="58.2" rx="7.53" ry="10.3" />
+  <rect x="46.6" y="76.5" width="10.2" height="22.4" rx="7.53" ry="3.02" />
+  <rect x="63.8" y="76.5" width="10.2" height="22.4" rx="7.53" ry="3.02" />
+  <rect x="81" y="76.5" width="10.2" height="22.4" rx="7.53" ry="3.02" />
+ </g>
+</g><g data-template-id="proxy" id="proxy.svg" data-viewBox="0 0 100 100" transform="translate(880.0 0)"><rect width="100" height="100" rx="16.5" ry="13.8" fill="#00d15f" />
+ <g transform="rotate(180 67.9 43.5)">
+  <path d="m57.4 44 25.5-25.5" fill="#00d15f" stop-color="#000000" />
+  <path d="m81.9 17.6-25.5 25.5 1.9 1.91 25.5-25.5z" fill="#fff" stop-color="#000000" />
+  <path d="m71.9 16.7a1.35 1.35 0 0 0-1.35 1.35 1.35 1.35 0 0 0 1.35 1.35h10.1v10.1a1.35 1.35 0 0 0 1.35 1.35 1.35 1.35 0 0 0 1.35-1.35v-12.8z" fill="#fff" stop-color="#000000" stroke-linecap="round" />
+ </g>
+ <g transform="translate(-30.6 14.3)">
+  <path d="m57.4 44 25.5-25.5" fill="#00d15f" stop-color="#000000" />
+  <path d="m81.9 17.6-25.5 25.5 1.9 1.91 25.5-25.5z" fill="#fff" stop-color="#000000" />
+  <path d="m71.9 16.7a1.35 1.35 0 0 0-1.35 1.35 1.35 1.35 0 0 0 1.35 1.35h10.1v10.1a1.35 1.35 0 0 0 1.35 1.35 1.35 1.35 0 0 0 1.35-1.35v-12.8z" fill="#fff" stop-color="#000000" stroke-linecap="round" />
+ </g>
+</g><g data-template-id="vbr" id="vbr.svg" data-viewBox="0 0 100 100" transform="translate(990.0 0)"><rect width="100" height="100" rx="16.5" ry="13.8" fill="#00d15f" />
  <rect x="52" y="54.4" width="33.9" height="32" rx="7.53" ry="10.3" fill="#00d15f" stroke="#fff" stroke-width="2.2" />
  <rect x="14.1" y="13.6" width="33.9" height="32" rx="7.53" ry="10.3" fill="#00d15f" stroke="#fff" stroke-width="2.2" />
  <g transform="translate(-1.64 -1.18)">
@@ -38,7 +58,7 @@
   <path d="m81.9 17.6-25.5 25.5 1.9 1.91 25.5-25.5z" fill="#fff" stop-color="#000000" />
   <path d="m71.9 16.7a1.35 1.35 0 0 0-1.35 1.35 1.35 1.35 0 0 0 1.35 1.35h10.1v10.1a1.35 1.35 0 0 0 1.35 1.35 1.35 1.35 0 0 0 1.35-1.35v-12.8z" fill="#fff" stop-color="#000000" stroke-linecap="round" />
  </g>
-</g><g data-template-id="hypervisor" id="hypervisor" data-viewBox="0 0 275 150" transform="translate(770.0 0)"><path d="m11 79.4c23 16.1 74.5 46.6 78.9 46.5l98.1-1.15c4.3-0.0503 53.8-29.5 76.1-45.4h-253z" fill="#adacaf" stroke-width="2.22" />
+</g><g data-template-id="hypervisor" id="hypervisor.svg" data-viewBox="0 0 275 150" transform="translate(1100.0 0)"><path d="m11 79.4c23 16.1 74.5 46.6 78.9 46.5l98.1-1.15c4.3-0.0503 53.8-29.5 76.1-45.4h-253z" fill="#adacaf" stroke-width="2.22" />
  <rect width="275" height="79.4" rx="10.1" ry="9.37" fill="#505861" />
  <rect x="80.4" y="123" width="114" height="27.1" rx="5.23" ry="6.46" fill="#505861" />
  <path d="m91.1 126c-0.793 0-1.43 1.35-1.43 3.02v14.2c0 1.67 0.638 3.02 1.43 3.02 0.793 0 1.43-1.35 1.43-3.02v-14.2c0-1.67-0.638-3.02-1.43-3.02zm5.79 0c-0.793 0-1.43 1.35-1.43 3.02v14.2c0 1.67 0.638 3.02 1.43 3.02 0.793 0 1.43-1.35 1.43-3.02v-14.2c0-1.67-0.638-3.02-1.43-3.02zm5.79 0c-0.793 0-1.43 1.35-1.43 3.02v14.2c0 1.67 0.64 3.02 1.43 3.02 0.793 0 1.43-1.35 1.43-3.02v-14.2c0-1.67-0.638-3.02-1.43-3.02zm5.79 0c-0.793 0-1.43 1.35-1.43 3.02v14.2c0 1.67 0.638 3.02 1.43 3.02 0.793 0 1.43-1.35 1.43-3.02v-14.2c0-1.67-0.638-3.02-1.43-3.02zm5.79 0c-0.793 0-1.43 1.35-1.43 3.02v14.2c0 1.67 0.638 3.02 1.43 3.02 0.793 0 1.43-1.35 1.43-3.02v-14.2c0-1.67-0.638-3.02-1.43-3.02zm5.79 0c-0.793 0-1.43 1.35-1.43 3.02v14.2c0 1.67 0.64 3.02 1.43 3.02 0.793 0 1.43-1.35 1.43-3.02v-14.2c0-1.67-0.638-3.02-1.43-3.02zm5.79 0c-0.793 0-1.43 1.35-1.43 3.02v14.2c0 1.67 0.638 3.02 1.43 3.02 0.793 0 1.43-1.35 1.43-3.02v-14.2c0-1.67-0.64-3.02-1.43-3.02zm5.79 0c-0.793 0-1.43 1.35-1.43 3.02v14.2c0 1.67 0.638 3.02 1.43 3.02 0.793 0 1.43-1.35 1.43-3.02v-14.2c0-1.67-0.638-3.02-1.43-3.02zm5.79 0c-0.793 0-1.43 1.35-1.43 3.02v14.2c0 1.67 0.64 3.02 1.43 3.02 0.793 0 1.43-1.35 1.43-3.02v-14.2c0-1.67-0.638-3.02-1.43-3.02zm5.79 0c-0.793 0-1.43 1.35-1.43 3.02v14.2c0 1.67 0.638 3.02 1.43 3.02 0.793 0 1.43-1.35 1.43-3.02v-14.2c0-1.67-0.64-3.02-1.43-3.02zm5.79 0c-0.793 0-1.43 1.35-1.43 3.02v14.2c0 1.67 0.638 3.02 1.43 3.02 0.793 0 1.43-1.35 1.43-3.02v-14.2c0-1.67-0.638-3.02-1.43-3.02zm5.79 0c-0.793 0-1.43 1.35-1.43 3.02v14.2c0 1.67 0.638 3.02 1.43 3.02 0.793 0 1.43-1.35 1.43-3.02v-14.2c0-1.67-0.638-3.02-1.43-3.02zm5.79 0c-0.793 0-1.43 1.35-1.43 3.02v14.2c0 1.67 0.638 3.02 1.43 3.02 0.793 0 1.43-1.35 1.43-3.02v-14.2c0-1.67-0.64-3.02-1.43-3.02zm5.79 0c-0.793 0-1.43 1.35-1.43 3.02v14.2c0 1.67 0.638 3.02 1.43 3.02 0.793 0 1.43-1.35 1.43-3.02v-14.2c0-1.67-0.638-3.02-1.43-3.02zm5.79 0c-0.793 0-1.43 1.35-1.43 3.02v14.2c0 1.67 0.638 3.02 1.43 3.02 0.793 0 1.43-1.35 1.43-3.02v-14.2c-1e-5 -1.67-0.638-3.02-1.43-3.02zm5.79 0c-0.793 0-1.43 1.35-1.43 3.02v14.2c0 1.67 0.638 3.02 1.43 3.02 0.793 0 1.43-1.35 1.43-3.02v-14.2c0-1.67-0.64-3.02-1.43-3.02zm5.79 0c-0.793 0-1.43 1.35-1.43 3.02v14.2c0 1.67 0.638 3.02 1.43 3.02s1.43-1.35 1.43-3.02v-14.2c0-1.67-0.638-3.02-1.43-3.02z" fill="#fff" stroke-width="2.2" />

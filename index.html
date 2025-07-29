@@ -170,8 +170,8 @@
         postrender(svgelement,catalog)
         addfont(svgelement,fontfamily)
 
-
-        div.style = `width: ${pnWidth}px; height: ${pnHeight}px`;
+        
+        //div.style = `width: ${pnWidth}px; height: ${pnHeight}px`;
 
         const filename = title.toLowerCase().replaceAll(/[^A-Za-z0-9]+/g,"-").replace(/^[-\s]+|[-\s]+$/g, '');
         const serializer = new XMLSerializer();
@@ -242,10 +242,15 @@
             })
           }
         }
-        
+        svgelement.setAttribute("style","max-height:90vh")
         
       }
-
+      //align view always
+      const y = document.getElementById("inputGroup-font").getBoundingClientRect().top + window.scrollY;
+      window.scroll({
+        top: y,
+        behavior: 'smooth'
+      });
     }
     PikchrModule().then((m) => {
         pikchr = m;
@@ -357,10 +362,15 @@
             Source code available a <a href="https://github.com/tdewin/piclasso">Piclasso Github</a>
           </div>
         </div>
-        <div class="row">
+        <div class="row  mt-1">
 
             <div class="col">
-                <input class="form-control" value="Arial" id="fontfamily" />
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-font">Font Family</span>
+                  </div>
+                  <input class="form-control" class="form-control" aria-label="Default" value="'Arial'" id="fontfamily" aria-describedby="inputGroup-font" />
+                </div>
                 <input type="button" class="btn btn-danger mt-1" value="Clear" onclick="clearText();return false"></input>
                 <input type="button" class="btn btn-success mt-1" value="Insert Text" onclick="insertText();return false"></input>
                 <input type="button" class="btn btn-success mt-1" value="Insert Arrow" onclick="insertArrow();return false"></input>
@@ -368,7 +378,7 @@
             <div  class="col">
                 <!--<a id="refresh" class="btn btn-success btn" >Refresh</a>-->
                 <input class="form-control" value="Piclasso Diagram" id="title"/>
-                <div class="w-100 mb-2" >
+                <div class="w-100" >
                   <a id="downloadPermaBtn" class="btn  btn-success mt-1" style="min-width:150px">Permalink</a>
                   <a id="downloadSrcBtn" class="btn btn-success mt-1" style="min-width:150px">Download Pikchr</a>
                   <a id="downloadBtn" class="btn btn-success mt-1" style="min-width:150px">Download SVG</a>
@@ -377,7 +387,7 @@
 
             </div>
         </div>
-        <div class="row">
+        <div class="row mt-1">
             <div class="col">
                 <textarea class="form-control font-monospace" rows="20" style="display:none" id="input">
 VB1  : rpl "vbr"
@@ -420,15 +430,24 @@ VM1  : rpl "vm" with .sw at HY0.nw+(0,$o4)
       
 </textarea>
 
-<input class="form-control" type="file" id="fileInput" />
-<input class="form-control" placeholder="filter" value="" onkeyup="filterclick()" id="filter" />
+
+<div class="input-group mt-1">
+  <input class="form-control" type="file" id="fileInput"  aria-label="Default"  aria-describedby="inputGroup-file" />
+</div>
+
+<div class="input-group mt-1">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroup-filter">Icon Filter</span>
+  </div>
+<input class="form-control" placeholder="filter" value="" onkeyup="filterclick()" id="filter" aria-describedby="inputGroup-filter" />
+</div>
 <div id="loaded"></div>
 
                 <textarea class="form-control" style="display: none;" rows="20" id="templates">
                 </textarea>
             </div>
             
-            <div id="output" class="col">
+            <div id="output" class="col" style="max-height: 90vh;">
             </div>
         </div>
 
