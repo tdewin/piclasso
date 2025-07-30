@@ -134,10 +134,25 @@ move
 R: rpl "backup-repository"
 arrow from A to R chop "6160" above
 `
+        const s = window.location.search.replace(/^[?]/g,'').split('&').map((e)=>{ return e.split(/([a-z]+)=(.*)/)})
+        if (s.length >0) {
+            s.forEach((ln)=> {
+                if (ln.length > 3) {
+                    let b = atob(ln[2])
+                    let i = ln[1]
+                    
+
+                    if (["i"].indexOf("i") != -1) {                        
+                        if (i=="i") {source=b}
+                    } 
+                }
+            })
+        }
 
         update(source);
       })
       
+
 
     </script>
 

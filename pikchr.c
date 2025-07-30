@@ -3842,6 +3842,44 @@ static void boxFit(Pik *p, PObj *pObj, PNum w, PNum h){
   UNUSED_PARAMETER(p);
 }
 
+static void rawRender(Pik *p, PObj *pObj){
+  PNum w = pObj->w;
+  PNum h = pObj->h;
+  PNum w2 = 0.5*w;
+  PNum h2 = 0.5*h;
+
+  PPoint pt = pObj->ptAt;
+  
+  if (pObj->nTxt > 0) {
+    PToken t = pObj->aTxt[0];
+
+    const char *z = t.z;
+    unsigned int nz = t.n;
+
+    if( nz>=2 && z[0]=='"' ){                                                     
+      z = z+1;                                                                      
+      nz = nz-2;                                                                     
+    }
+    
+    pObj->aTxt[0].n = 0;
+    pObj->nTxt = 0;
+
+    pik_append_xy(p,"<g transform=\"translate(",pt.x-w2,pt.y+h2);
+    pik_append_num(p,") scale(",p->rScale*w/100);
+    pik_append_num(p," ",p->rScale*h/100);
+    pik_append(p,")\"", -1);
+    
+
+    pik_append_data_orig(p,pObj);
+
+    pik_append(p,">\n", -1);
+    pik_append(p,"<path d=\"", -1);
+    pik_append(p,z,nz);
+    pik_append(p,"\" ", 2);
+    pik_append_style(p,pObj,3);
+    pik_append(p,"\" />\n</g>\n", -1);
+  }
+}
 
 static void replaceRender(Pik *p, PObj *pObj){
   PNum w = pObj->w;
@@ -3851,6 +3889,7 @@ static void replaceRender(Pik *p, PObj *pObj){
 
   PPoint pt = pObj->ptAt;
 
+  if (pObj->nTxt > 0) {
   pik_append_xy(p,"<g transform=\"translate(",pt.x-w2,pt.y+h2);
   pik_append(p,")\"", -1);
   pik_append_data_orig(p,pObj);
@@ -3864,6 +3903,7 @@ static void replaceRender(Pik *p, PObj *pObj){
   pik_append(p,"\" ", -1);
   pik_append(p," />\n</g>\n", -1);
   //pik_append_txt(p, pObj, 0);
+  }
 }
 
 static void boxRender(Pik *p, PObj *pObj){
@@ -4614,6 +4654,17 @@ static const PClass aClass[] = {
       /* xFit */          ovalFit,
       /* xRender */       boxRender
    },
+   {  /* name */          "raw",
+      /* isline */        0,
+      /* eJust */         1,
+      /* xInit */         boxInit,
+      /* xNumProp */      0,
+      /* xCheck */        0,
+      /* xChop */         boxChop,
+      /* xOffset */       boxOffset,
+      /* xFit */          0,
+      /* xRender */       rawRender 
+   },
    {  /* name */          "rpl",
       /* isline */        0,
       /* eJust */         1,
@@ -4759,8 +4810,12 @@ static void pik_append_data_orig(Pik* p,PObj *pObj) {
   if (pObj->zName != NULL) {    
     pik_append(p," data-orig-name=\"",-1);
     pik_append(p,pObj->zName,-1);                                             
-    pik_append(p,"\"",-1);     
+    pik_append(p,"\"",1);     
   }                    
+
+  pik_append_num(p," data-text-sz=\"",pObj->nTxt);
+  pik_append(p,"\"",1);     
+
   if (pObj->nTxt > 0) {
     PToken t = pObj->aTxt[0];
 
@@ -5337,7 +5392,8 @@ static void pik_append_txt(Pik *p, PObj *pObj, PBox *pBox){
     }
     pik_append(p," dominant-baseline=\"central\"",-1);
     pik_append_data_orig(p,pObj);
-    pik_append(p," >",-1);
+    pik_append_num(p, " data-text-i=\"", i);
+    pik_append(p,"\" >",-1);
     if( t->n>=2 && t->z[0]=='"' ){
       z = t->z+1;
       nz = t->n-2;
@@ -7295,7 +7351,9 @@ static void pik_bbox_add_elist(Pik *p, PList *pList, PNum wArrow){
   for(i=0; i<pList->n; i++){
     PObj *pObj = pList->a[i];
     if( pObj->sw>=0.0 ) pik_bbox_addbox(&p->bbox, &pObj->bbox);
-    pik_append_txt(p, pObj, &p->bbox);
+    if (strcmp(pObj->type->zName,"raw") && strcmp(pObj->type->zName,"rpl")) {
+      pik_append_txt(p, pObj, &p->bbox);
+    }
     if( pObj->pSublist ) pik_bbox_add_elist(p, pObj->pSublist, wArrow);
 
 
@@ -8441,4 +8499,4 @@ int Pikchr_Init(Tcl_Interp *interp){
 #endif /* PIKCHR_TCL */
 
 
-#line 8444 "pikchr.c"
+#line 8502 "pikchr.c"

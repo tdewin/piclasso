@@ -8,11 +8,49 @@
  static void pik_append_text(Pik*,const char*,int,int);
  static void pik_append_num(Pik*,const char*,PNum);
  static void pik_append_point(Pik*,const char*,PPoint*);
-@@ -1172,6 +1173,31 @@
+@@ -1172,6 +1173,71 @@
    if( h>0 ) pObj->h = h;
    UNUSED_PARAMETER(p);
  }
 +
++static void rawRender(Pik *p, PObj *pObj){
++  PNum w = pObj->w;
++  PNum h = pObj->h;
++  PNum w2 = 0.5*w;
++  PNum h2 = 0.5*h;
++
++  PPoint pt = pObj->ptAt;
++  
++  if (pObj->nTxt > 0) {
++    PToken t = pObj->aTxt[0];
++
++    const char *z = t.z;
++    unsigned int nz = t.n;
++
++    if( nz>=2 && z[0]=='"' ){                                                     
++      z = z+1;                                                                      
++      nz = nz-2;                                                                     
++    }
++    
++    pObj->aTxt[0].n = 0;
++    pObj->nTxt = 0;
++
++    pik_append_xy(p,"<g transform=\"translate(",pt.x-w2,pt.y+h2);
++    pik_append_num(p,") scale(",p->rScale*w/100);
++    pik_append_num(p," ",p->rScale*h/100);
++    pik_append(p,")\"", -1);
++    
++
++    pik_append_data_orig(p,pObj);
++
++    pik_append(p,">\n", -1);
++    pik_append(p,"<path d=\"", -1);
++    pik_append(p,z,nz);
++    pik_append(p,"\" ", 2);
++    pik_append_style(p,pObj,3);
++    pik_append(p,"\" />\n</g>\n", -1);
++  }
++}
 +
 +static void replaceRender(Pik *p, PObj *pObj){
 +  PNum w = pObj->w;
@@ -22,6 +60,7 @@
 +
 +  PPoint pt = pObj->ptAt;
 +
++  if (pObj->nTxt > 0) {
 +  pik_append_xy(p,"<g transform=\"translate(",pt.x-w2,pt.y+h2);
 +  pik_append(p,")\"", -1);
 +  pik_append_data_orig(p,pObj);
@@ -35,12 +74,13 @@
 +  pik_append(p,"\" ", -1);
 +  pik_append(p," />\n</g>\n", -1);
 +  //pik_append_txt(p, pObj, 0);
++  }
 +}
 +
  static void boxRender(Pik *p, PObj *pObj){
    PNum w2 = 0.5*pObj->w;
    PNum h2 = 0.5*pObj->h;
-@@ -1221,7 +1247,9 @@
+@@ -1221,7 +1287,9 @@
        pik_append(p,"Z\" ",-1);
      }
      pik_append_style(p,pObj,3);
@@ -51,7 +91,7 @@
    }
    pik_append_txt(p, pObj, 0);
  }
-@@ -1284,7 +1312,9 @@
+@@ -1284,7 +1352,9 @@
      pik_append_y(p," cy=\"", pt.y, "\"");
      pik_append_dis(p," r=\"", r, "\" ");
      pik_append_style(p,pObj,3);
@@ -62,7 +102,7 @@
    }
    pik_append_txt(p, pObj, 0);
  }
-@@ -1319,7 +1349,9 @@
+@@ -1319,7 +1389,9 @@
      pik_append_arc(p,w2,rad,pt.x+w2,pt.y+h2-rad);
      pik_append(p,"\" ",-1);
      pik_append_style(p,pObj,3);
@@ -73,7 +113,7 @@
    }
    pik_append_txt(p, pObj, 0);
  }
-@@ -1381,7 +1413,9 @@
+@@ -1381,7 +1453,9 @@
      pik_append_y(p," cy=\"", pt.y, "\"");
      pik_append_dis(p," r=\"", r, "\"");
      pik_append_style(p,pObj,2);
@@ -84,7 +124,7 @@
    }
    pik_append_txt(p, pObj, 0);
  }
-@@ -1437,7 +1471,9 @@
+@@ -1437,7 +1511,9 @@
      pik_append_xy(p,"L", pt.x,pt.y+h2);
      pik_append(p,"Z\" ",-1);
      pik_append_style(p,pObj,3);
@@ -95,7 +135,7 @@
    }
    pik_append_txt(p, pObj, 0);
  }
-@@ -1495,7 +1531,9 @@
+@@ -1495,7 +1571,9 @@
      pik_append_dis(p," rx=\"", w/2.0, "\"");
      pik_append_dis(p," ry=\"", h/2.0, "\" ");
      pik_append_style(p,pObj,3);
@@ -106,7 +146,7 @@
    }
    pik_append_txt(p, pObj, 0);
  }
-@@ -1560,7 +1598,9 @@
+@@ -1560,7 +1638,9 @@
      pik_append_xy(p,"L", pt.x+w2, pt.y+(h2-rad));
      pik_append(p,"\" ",-1);
      pik_append_style(p,pObj,0);
@@ -117,7 +157,7 @@
    }
    pik_append_txt(p, pObj, 0);
  }
-@@ -1607,7 +1647,9 @@
+@@ -1607,7 +1687,9 @@
      }
      pik_append(p,"\" ",-1);
      pik_append_style(p,pObj,pObj->bClose?3:0);
@@ -128,7 +168,7 @@
    }
    pik_append_txt(p, pObj, 0);
  }
-@@ -1707,7 +1749,9 @@
+@@ -1707,7 +1789,9 @@
    }
    pik_append(p,"\" ",-1);
    pik_append_style(p,pObj,pObj->bClose?3:0);
@@ -139,10 +179,21 @@
  }
  static void splineRender(Pik *p, PObj *pObj){
    if( pObj->sw>0.0 ){
-@@ -1902,6 +1946,17 @@
+@@ -1902,6 +1986,28 @@
        /* xFit */          ovalFit,
        /* xRender */       boxRender
     },
++   {  /* name */          "raw",
++      /* isline */        0,
++      /* eJust */         1,
++      /* xInit */         boxInit,
++      /* xNumProp */      0,
++      /* xCheck */        0,
++      /* xChop */         boxChop,
++      /* xOffset */       boxOffset,
++      /* xFit */          0,
++      /* xRender */       rawRender 
++   },
 +   {  /* name */          "rpl",
 +      /* isline */        0,
 +      /* eJust */         1,
@@ -157,7 +208,7 @@
     {  /* name */          "spline",
        /* isline */        1,
        /* eJust */         0,
-@@ -2032,6 +2087,51 @@
+@@ -2032,6 +2138,55 @@
    p->zOut[p->nOut] = 0;
  }
  
@@ -165,8 +216,12 @@
 +  if (pObj->zName != NULL) {    
 +    pik_append(p," data-orig-name=\"",-1);
 +    pik_append(p,pObj->zName,-1);                                             
-+    pik_append(p,"\"",-1);     
++    pik_append(p,"\"",1);     
 +  }                    
++
++  pik_append_num(p," data-text-sz=\"",pObj->nTxt);
++  pik_append(p,"\"",1);     
++
 +  if (pObj->nTxt > 0) {
 +    PToken t = pObj->aTxt[0];
 +
@@ -209,14 +264,26 @@
  /*
  ** Given a string and its length, returns true if the string begins
  ** with a construct which syntactically matches an HTML entity escape
-@@ -2567,7 +2667,9 @@
+@@ -2567,7 +2722,10 @@
          pik_append(p,")\"",2);
        }
      }
 -    pik_append(p," dominant-baseline=\"central\">",-1);
 +    pik_append(p," dominant-baseline=\"central\"",-1);
 +    pik_append_data_orig(p,pObj);
-+    pik_append(p," >",-1);
++    pik_append_num(p, " data-text-i=\"", i);
++    pik_append(p,"\" >",-1);
      if( t->n>=2 && t->z[0]=='"' ){
        z = t->z+1;
        nz = t->n-2;
+@@ -4525,7 +4683,9 @@
+   for(i=0; i<pList->n; i++){
+     PObj *pObj = pList->a[i];
+     if( pObj->sw>=0.0 ) pik_bbox_addbox(&p->bbox, &pObj->bbox);
+-    pik_append_txt(p, pObj, &p->bbox);
++    if (strcmp(pObj->type->zName,"raw") && strcmp(pObj->type->zName,"rpl")) {
++      pik_append_txt(p, pObj, &p->bbox);
++    }
+     if( pObj->pSublist ) pik_bbox_add_elist(p, pObj->pSublist, wArrow);
+ 
+ 
