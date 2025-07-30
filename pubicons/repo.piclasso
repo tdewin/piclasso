@@ -1,0 +1,27 @@
+//pre
+boxwid = 1
+boxht = 1
+margin = 0
+$grey = 0x505861
+$lightgrey = 0xf0f0f0
+$purple = 0x8e71f4
+$green = 0x00d15f
+color = white
+thickness = 0.02
+
+boxrad = 0.15
+
+fontscale = 2
+$adj=-0.1
+
+
+
+B:box  fill $green color -1 thickness 0
+[
+box color white thickness 0.02  wid 0.2 ht 0.5 rad 0.07
+box color white thickness 0.02  wid 0.1 ht 0.15 rad 0.03 with .sw at previous .se+(0.1,0)
+box color white thickness 0.02  wid 0.1 ht 0.15 rad 0.03 with .sw at previous .se+(0.1,0)
+box color white thickness 0.02  wid 0.1 ht 0.15 rad 0.03 with .sw at previous .se+(0.1,0)
+] with .c at B.c
+
+move to B.e+(0.1,0)

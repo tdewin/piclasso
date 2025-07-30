@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="100" height="100" version="1.1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
- <rect width="100" height="100" rx="16.5" ry="13.8" fill="#00d15f"/>
- <text transform="translate(39.4 61.5)" fill="#00d15f" font-family="'ES Build'" font-size="32px" letter-spacing="-.01px" stroke="#ffffff" stroke-width="2.2" text-align="center" word-spacing="-.01px" style="line-height:1;shape-inside:url(#rect15);text-decoration-color:#000000;white-space:pre" xml:space="preserve"><tspan x="0" y="0"><tspan fill="#ffffff" font-family="Arial" font-weight="bold" stroke="none">V</tspan></tspan></text>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="149.759995" height="149.759995" viewBox="0 0 149.759995 149.759995">
+<path fill-rule="nonzero" fill="rgb(0%, 81.960784%, 37.254902%)" fill-opacity="1" d="M 24.480469 146.878906 L 125.28125 146.878906 C 137.210938 146.878906 146.878906 137.210938 146.878906 125.28125 L 146.878906 24.480469 C 146.878906 12.550781 137.210938 2.878906 125.28125 2.878906 L 24.480469 2.878906 C 12.550781 2.878906 2.878906 12.550781 2.878906 24.480469 L 2.878906 125.28125 C 2.878906 137.210938 12.550781 146.878906 24.480469 146.878906 Z M 24.480469 146.878906 "/>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 72.535156 89.28125 L 64.859375 67.804688 L 69.5625 67.804688 L 74.996094 83.699219 L 80.257812 67.804688 L 84.855469 67.804688 L 77.164062 89.28125 Z M 64.875 62.121094 "/>
 </svg>
