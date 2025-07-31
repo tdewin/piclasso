@@ -15,15 +15,23 @@ fontscale = 2
 $adj=-0.1
 
 
+define browser {
+BROWSERREFBOX:$1
+BROWSERBOX:box fill -1 color -1 ht 0.1 wid 0.8 with .n at $1.n+(0,-0.02)
+line from previous.sw to previous.se color white thickness 0.01
+left; 
+$raddot = 0.01
+$dotm = $raddot*5
+dot with .e at previous box.e+(-0.03,0) color -1 fill white rad $raddot;move $dotm;
+dot color -1 fill white  rad $raddot;move $dotm;
+dot color -1 fill white  rad $raddot;right;$2
+move to BROWSERREFBOX.end;
+}
+
+
 
 B:box  fill $green color -1 thickness 0 
-raw "M0,20 h 100" color white at B
-left;
-dot at B.ne-(0.10,0.05)
-move 0.1;dot
-move 0.1;dot
-right
 text "http://" bold big at B
+browser(B)
 
 move to B.e+(0.1,0)
- 

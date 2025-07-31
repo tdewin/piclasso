@@ -15,6 +15,19 @@ fontscale = 2
 $adj=-0.1
 
 
+define browser {
+BROWSERREFBOX:$1
+BROWSERBOX:box fill -1 color -1 ht 0.1 wid 0.8 with .n at $1.n+(0,-0.02)
+line from previous.sw to previous.se color white thickness 0.01
+left; 
+$raddot = 0.005
+$dotm = $raddot*8
+dot with .e at previous box.e+(-0.03,0) color white rad $raddot;move $dotm;dot color white rad $raddot;move $dotm;dot color white rad $raddot;right;$2
+move to BROWSERREFBOX.end;
+}
+
+
+
 
 B:box  fill $grey color -1 thickness 0 
 box at B   ht 0.6 wid 0.8 rad 0.1 
@@ -27,4 +40,3 @@ box with .w at previous box.e+(0.05,0)  ht 0.4 wid 0.1 rad 0.02; dot at previous
 ] at B
 
 move to B.e+(0.1,0)
-

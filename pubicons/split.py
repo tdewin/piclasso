@@ -4,6 +4,7 @@
 #../merge/merge.py -i . -o ../pubicons-bundle.svg
 
 import argparse
+import os
 import re
 import sys
 import subprocess
@@ -23,7 +24,7 @@ def split_content(content):
             header = parts[i].replace("//beginsplit ","")
             body = parts[i+1] if i+1 < len(parts) else ''
             
-            grouped[header]=pre+'\n'+ body
+            grouped[header]=pre+'\n'+ body.strip()
     return grouped
 
 def main():
@@ -32,6 +33,9 @@ def main():
                         help='Input file or stdin')
     parser.add_argument('--piclasso',required=True)
     parser.add_argument('--rsvgconvert',required=True)
+    parser.add_argument('--onlynew', action='store_true',
+                        help='Only run the command if the output file does not already exist')
+
     args = parser.parse_args()
 
     content = args.pic.read()
@@ -42,6 +46,11 @@ def main():
         for duplicate in section.split(","):
             picfile = f"{duplicate}.piclasso"
             svgfile = f"{duplicate}.svg"
+            
+            if args.onlynew and os.path.exists(picfile):
+                print(f"Skipping execution: {picfile} already exists and --onlynew is set.")
+                continue
+
             with open(picfile, 'w') as file:
                 file.write(sections[section])
             
@@ -55,10 +64,14 @@ def main():
             piclasso.stdout.close()
 
             # Get the final output
-            output, _ = rsvgconvert.communicate()
+            output, err = rsvgconvert.communicate()
+            
 
             print(f"{svgfile} should be created")
-            print(f" Pipeline output {output}")
+            if output != "":
+                print(f" Pipeline output {output} {err}")
+            
+            
 
 
 if __name__ == '__main__':
