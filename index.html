@@ -212,6 +212,10 @@
                 console.log(encodingError)
         });
 
+        const linkrawsrc = document.getElementById("downloadRawSrcBtn")
+        const base64rawsrc = btoa(unescape(encodeURIComponent(inpEl.value)));
+        linkrawsrc.href = "data:text/plain;base64," + base64rawsrc;
+        linkrawsrc.download = `${filename}.piclasso`;
 
         //not perfect, if there is " rpl " it will match as well but okay
         const rerpl = /([\s:])rpl /g
@@ -390,6 +394,7 @@
                 <input class="form-control" value="Piclasso Diagram" id="title"/>
                 <div class="w-100" >
                   <a id="downloadPermaBtn" class="btn  btn-success mt-1" style="min-width:150px">Permalink</a>
+                  <a id="downloadRawSrcBtn" class="btn btn-success mt-1" style="min-width:150px">Download Piclasso</a>
                   <a id="downloadSrcBtn" class="btn btn-success mt-1" style="min-width:150px">Download Pikchr</a>
                   <a id="downloadBtn" class="btn btn-success mt-1" style="min-width:150px">Download SVG</a>
                   <a id="downloadPngBtn" class="btn btn-success mt-1"   style="min-width:150px">Download PNG</a>
